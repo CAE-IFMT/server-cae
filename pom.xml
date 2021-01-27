@@ -78,6 +78,7 @@
     </dependencies>
 
     <build>
+        <finalName>cae-api</finalName>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <plugins>
@@ -85,6 +86,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.4.2</version>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <mainClass>br.edu.ifmt.controledeacesso.ControleDeAcessoApplication</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
