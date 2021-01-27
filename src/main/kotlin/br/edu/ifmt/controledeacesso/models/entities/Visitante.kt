@@ -6,6 +6,8 @@ import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 
 /**
+ * Entidade que representa um visitante
+ *
  * @project cae-api
  * @author daohn on 24/01/2021
  */
