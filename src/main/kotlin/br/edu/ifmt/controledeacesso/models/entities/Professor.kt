@@ -18,6 +18,6 @@ data class Professor(
   private val nome: String,
   @Email @NotBlank(message = "O email é necessário")
   private val email: String,
-  @OneToMany(mappedBy = "professor")
-  private val visitantes: List<Visitante>,
+  @OneToMany
+  private val visitas: List<Visita>,
 )

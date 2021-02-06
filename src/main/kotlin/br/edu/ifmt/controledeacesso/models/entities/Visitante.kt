@@ -1,6 +1,5 @@
 package br.edu.ifmt.controledeacesso.models.entities
 
-import java.time.LocalDateTime
 import javax.persistence.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
@@ -19,13 +18,8 @@ data class Visitante(
   private val nome: String,
   @Email @NotBlank(message = "O email é necessário")
   private val email: String,
-  @ManyToOne
-  private val professor: Professor,
-
-  @OneToMany
-  private val visitaOcorrida: List<VisitaOcorrida>,
-
+  @NotBlank(message = "O cpf é necessário")
   private val cpf: String,
-  private val data: LocalDateTime,
-  private val motivo: String,
+  @OneToMany
+  private val visitas: List<Visita>,
 )
