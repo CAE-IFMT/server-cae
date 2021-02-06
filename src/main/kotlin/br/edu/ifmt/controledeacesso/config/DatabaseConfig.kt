@@ -49,8 +49,20 @@ class DatabaseConfig(
       null, LocalDateTime.now().minusDays(1).minusHours(10), "Devolver livro",
       false, p3, v3
     )
+    val visita4 = Visita(
+      null, LocalDateTime.now().minusHours(10), "Devolver livro",
+      false, p1, v2
+    )
+    val visita5 = Visita(
+      null, LocalDateTime.now().plusHours(3), "Devolver livro",
+      false, p2, v3
+    )
+    val visita6 = Visita(
+      null, LocalDateTime.now().plusDays(1), "Devolver livro",
+      false, p2, v1
+    )
 
-    visitaRepository.saveAll(listOf(visita1, visita2, visita3))
+    visitaRepository.saveAll(listOf(visita1, visita2, visita3, visita4, visita5, visita6))
 
     val u1 = Usuario(null, "admin", "admin", "admin")
     val u2 = Usuario(null, "recepcionista", "recepcionista", "recepcionista")
