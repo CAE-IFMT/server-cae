@@ -16,11 +16,6 @@ data class Visita(
   private val data: LocalDateTime,
   private val motivo: String,
   private val ocorrido: Boolean,
-//  @ManyToMany(fetch = FetchType.LAZY)
-//  @JoinTable(
-//    name="visitante_professor",
-//    joinColumns = [JoinColumn(name="visitante_id")],
-//    inverseJoinColumns = [JoinColumn(name = "professor_id")])
   @ManyToOne
   private val professor: Professor,
   @ManyToOne
