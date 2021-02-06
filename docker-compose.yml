@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  database:
+    container_name: cae-db
+    image: br.edu.ifmt.controledeacesso/cae-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cae-db
+    ports:
+      - '35437:5432'
+    volumes:
+      - db-cae-volume:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - cae-api
+networks:
+  cae-api:
+    driver: bridge
+volumes:
+  db-cae-volume:
+    external: true
