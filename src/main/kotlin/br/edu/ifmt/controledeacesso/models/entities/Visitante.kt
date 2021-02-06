@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank
  */
 @Entity
 data class Visitante(
-  @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private val id: Long,
   @NotBlank(message = "O nome é necessário")
   private val nome: String,
