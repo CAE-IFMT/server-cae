@@ -1,5 +1,6 @@
 package br.edu.ifmt.controledeacesso.models.entities
 
+import br.edu.ifmt.controledeacesso.config.NoArg
 import javax.persistence.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
@@ -11,15 +12,29 @@ import javax.validation.constraints.NotBlank
  * @author daohn on 24/01/2021
  */
 @Entity
+@NoArg
 data class Visitante(
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private val id: Long,
+  var id: Long?,
   @NotBlank(message = "O nome é necessário")
-  private val nome: String,
+  var nome: String,
   @Email @NotBlank(message = "O email é necessário")
-  private val email: String,
+  var email: String,
   @NotBlank(message = "O cpf é necessário")
-  private val cpf: String,
-  @OneToMany
-  private val visitas: List<Visita>,
-)
+  var cpf: String,
+) {
+  @OneToMany(mappedBy = "visitante")
+  var visitas: MutableList<Visita> = mutableListOf()
+
+  fun adicionaVisita(visita: Visita) {
+    visitas.add(visita)
+    if (visita.professor?.equals(this) == true) return
+    visita.visitante = this
+  }
+
+  fun adicionaVisitas(visitas: List<Visita>) {
+    visitas.forEach {
+      adicionaVisita(it)
+    }
+  }
+}

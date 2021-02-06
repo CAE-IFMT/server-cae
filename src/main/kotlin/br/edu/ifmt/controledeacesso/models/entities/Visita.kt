@@ -1,5 +1,6 @@
 package br.edu.ifmt.controledeacesso.models.entities
 
+import br.edu.ifmt.controledeacesso.config.NoArg
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -10,14 +11,17 @@ import javax.persistence.*
  * @author daohn on 25/01/2021
  */
 @Entity
+@NoArg
 data class Visita(
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private val id: Long,
-  private val data: LocalDateTime,
-  private val motivo: String,
-  private val ocorrido: Boolean,
+  var id: Long?,
+  var data: LocalDateTime,
+  var motivo: String,
+  var ocorrido: Boolean,
   @ManyToOne
-  private val professor: Professor,
+  @JoinColumn(name = "professor_id")
+  var professor: Professor?,
   @ManyToOne
-  private val visitante: Visitante,
+  @JoinColumn(name = "visitante_id")
+  var visitante: Visitante?,
 )
