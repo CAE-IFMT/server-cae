@@ -23,6 +23,12 @@ class VisitaService(
     return repository.findAll().map(this::buildDTO)
   }
 
+  fun save(visitaDTO: VisitaDTO): VisitaDTO {
+    val visita = modelMapper.map(visitaDTO, Visita::class.java)
+    repository.save(visita)
+    return visitaDTO
+  }
+
   private fun buildDTO(visita: Visita): VisitaDTO {
     return modelMapper.map(visita, VisitaDTO::class.java)
   }
