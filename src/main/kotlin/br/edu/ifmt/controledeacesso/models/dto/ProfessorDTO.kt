@@ -11,7 +11,7 @@ import br.edu.ifmt.controledeacesso.config.NoArg
  */
 @NoArg
 data class ProfessorDTO(
-  var id: Long,
+  var id: Long?,
   var nome: String,
   var email: String,
 )
