@@ -11,14 +11,17 @@ import java.time.LocalDateTime
 class EmailParserService {
 
   @Throws(Exception::class)
-  fun parseDate(properties: MutableMap<String, String>): LocalDateTime {
-    val data = properties["data"]
-    val hora = properties["hora"]
+  fun parseDate(properties: MutableMap<String, String>): String {
+    val data = properties["data"]!!
+    val hora = properties["hora"]!!
 
-    val dataInt = data!!.split("/").map { it.toInt() }
-    val horaInt = hora!!.split(":").map { it.toInt() }
+    return if (hora.split(":").size == 3) ("$data $hora") else ("$data $hora:00")
+//    return mapper.map(data + hora, LocalDateTime::class.java)
 
-    return toLocalDate(dataInt[2], dataInt[1], dataInt[0], horaInt[0], horaInt[1])
+//    val dataInt = data!!.split("/").map { it.toInt() }
+//    val horaInt = hora!!.split(":").map { it.toInt() }
+//
+//    return toLocalDate(dataInt[2], dataInt[1], dataInt[0], horaInt[0], horaInt[1])
   }
 
   @Throws(Exception::class)
