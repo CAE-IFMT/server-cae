@@ -1,7 +1,7 @@
 package br.edu.ifmt.controledeacesso.services
 
 import br.edu.ifmt.controledeacesso.models.dto.ProfessorDTO
-import br.edu.ifmt.controledeacesso.models.dto.VisitaDTO
+import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
 import br.edu.ifmt.controledeacesso.models.dto.VisitanteDTO
 import net.glxn.qrgen.core.image.ImageType
 import net.glxn.qrgen.javase.QRCode
@@ -58,9 +58,12 @@ class EmailService(
       )
 
       val professor = ProfessorDTO(null, properties["professor"]!!, from)
-      val visita = VisitaDTO(null, data, properties["motivo"]!!, false, professor, visitante)
+      val visita = VisitaSaveDTO(data, properties["motivo"]!!, false, professor, visitante)
 
-      visitaService.save(visita)
+      println(visita)
+      // TODO: implementar persistência da nova visita no banco
+      // TODO: implementar envio de email para professor e visitante
+
     } catch (exception: Exception) {
 
     } finally {
