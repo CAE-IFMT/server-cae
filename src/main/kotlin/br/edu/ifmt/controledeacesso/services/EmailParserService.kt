@@ -14,12 +14,9 @@ class EmailParserService {
   fun parseDate(properties: MutableMap<String, String>): String {
     val data = properties["data"]!!
     val hora = properties["hora"]!!
-
-    return data + " " + hora
-//    return mapper.map(data + hora, LocalDateTime::class.java)
-
-//    val dataInt = data!!.split("/").map { it.toInt() }
-//    val horaInt = hora!!.split(":").map { it.toInt() }
+    return "$data $hora"
+//    val dataInt = data.split("/").map { it.toInt() }
+//    val horaInt = hora.split(":").map { it.toInt() }
 //
 //    return toLocalDate(dataInt[2], dataInt[1], dataInt[0], horaInt[0], horaInt[1])
   }

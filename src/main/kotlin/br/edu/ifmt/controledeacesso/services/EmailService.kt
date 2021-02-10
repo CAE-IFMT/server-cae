@@ -50,6 +50,8 @@ class EmailService(
       val properties = parserService.parseBody(body)
       val data = parserService.parseDate(properties)
 
+      assert(data == "${properties["data"]} ${properties["hora"]}")
+
       val visitante = VisitanteDTO(
         null,
         properties["visitante"]!!,
