@@ -65,6 +65,9 @@ class EmailService(
         visitante
       )
 
+      println(data)
+      println(visita.data)
+
       visitaService.save(visita)
 
       // TODO: implementar envio de email para professor e visitante
