@@ -5,8 +5,12 @@ import org.modelmapper.ModelMapper
 import org.modelmapper.convention.MatchingStrategies
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
+
+
 
 /**
  * @project cae-api
@@ -23,7 +27,10 @@ class ModelMapperConfig {
     val mapper = ModelMapper()
     mapper.configuration.matchingStrategy = MatchingStrategies.STRICT
 
-//    mapper.addConverter(stringToLocalDateTimeConverter())
+    mapper.createTypeMap(String::class.java, LocalDate::class.java)
+    mapper.createTypeMap(LocalDateTime::class.java, String::class.java)
+
+    mapper.addConverter(stringToLocalDateTimeConverter())
     mapper.addConverter(localDateTimeToStringConverter())
 
     return mapper

@@ -59,8 +59,7 @@ class EmailService(
 
       val professor = ProfessorDTO(null, properties["professor"]!!, from)
       val visita = VisitaSaveDTO(
-        properties["data"]!!,
-        properties["hora"]!!,
+        data,
         properties["motivo"]!!,
         professor,
         visitante

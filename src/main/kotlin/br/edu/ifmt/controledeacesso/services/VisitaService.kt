@@ -10,8 +10,6 @@ import br.edu.ifmt.controledeacesso.repositories.VisitaRepository
 import br.edu.ifmt.controledeacesso.repositories.VisitanteRepository
 import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 /**
  * Serviço responsável pela gestão das regras de negócio relacionado a entidade Visita
@@ -41,15 +39,9 @@ class VisitaService(
   private fun parseDTO(dto: VisitaSaveDTO): Visita {
     val visita = modelMapper.map(dto, Visita::class.java)
       ?: throw IllegalStateException("Algo deu errado durante a construção da Visita")
-    addData(visita, dto)
     addProfessor(visita, dto)
     addVisitante(visita, dto)
     return visita
-  }
-
-  private fun addData(visita: Visita, dto: VisitaSaveDTO) {
-    val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
-    visita.data = LocalDateTime.parse("${dto.data} ${dto.hora}", formatter)
   }
 
   private fun addVisitante(visita: Visita, dto: VisitaSaveDTO) {
