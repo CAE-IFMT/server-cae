@@ -15,7 +15,7 @@ class EmailParserService {
     val data = properties["data"]!!
     val hora = properties["hora"]!!
 
-    return "$data $hora"
+    return data + " " + hora
 //    return mapper.map(data + hora, LocalDateTime::class.java)
 
 //    val dataInt = data!!.split("/").map { it.toInt() }
