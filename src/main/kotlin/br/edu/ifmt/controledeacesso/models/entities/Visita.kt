@@ -1,7 +1,7 @@
 package br.edu.ifmt.controledeacesso.models.entities
 
 import br.edu.ifmt.controledeacesso.config.NoArg
-import java.time.LocalDateTime
+import java.time.LocalDate
 import javax.persistence.*
 
 /**
@@ -15,7 +15,7 @@ import javax.persistence.*
 data class Visita(
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   var id: Long?,
-  var data: LocalDateTime?,
+  var data: LocalDate?,
   var motivo: String,
   var ocorrido: Boolean,
   @ManyToOne
