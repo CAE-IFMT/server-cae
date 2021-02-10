@@ -11,10 +11,9 @@ import br.edu.ifmt.controledeacesso.config.NoArg
 @NoArg
 data class VisitaSaveDTO(
   var data: String,
+  var hora: String,
   var motivo: String,
-  var ocorrido: Boolean,
   var professor: ProfessorDTO,
   var visitante: VisitanteDTO,
-) {
-
-}
+  var ocorrido: Boolean = false,
+)

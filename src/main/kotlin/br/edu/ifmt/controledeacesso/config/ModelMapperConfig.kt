@@ -23,7 +23,7 @@ class ModelMapperConfig {
     val mapper = ModelMapper()
     mapper.configuration.matchingStrategy = MatchingStrategies.STRICT
 
-    mapper.addConverter(stringToLocalDateTimeConverter())
+//    mapper.addConverter(stringToLocalDateTimeConverter())
     mapper.addConverter(localDateTimeToStringConverter())
 
     return mapper

@@ -58,14 +58,20 @@ class EmailService(
       )
 
       val professor = ProfessorDTO(null, properties["professor"]!!, from)
-      val visita = VisitaSaveDTO(data, properties["motivo"]!!, false, professor, visitante)
+      val visita = VisitaSaveDTO(
+        properties["data"]!!,
+        properties["hora"]!!,
+        properties["motivo"]!!,
+        professor,
+        visitante
+      )
 
       visitaService.save(visita)
 
       // TODO: implementar envio de email para professor e visitante
 
     } catch (exception: Exception) {
-      exception.printStackTrace()
+      //exception.printStackTrace()
       print(exception.message)
     } finally {
 
