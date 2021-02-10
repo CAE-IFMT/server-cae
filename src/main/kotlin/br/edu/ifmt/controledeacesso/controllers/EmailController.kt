@@ -24,6 +24,12 @@ class EmailController(private val emailService: EmailService) {
     @RequestParam(value = "subject") subject: String,
     @RequestParam(value = "body-plain") body: String
   ): String {
+
+    println("FROM: $from")
+    println("SUBJECT: $subject")
+    println("-".repeat(30))
+    println(body)
+    println("-".repeat(30))
     emailService.createVisita(from, subject, body)
     return "post received"
   }
