@@ -10,15 +10,11 @@ import java.time.LocalDateTime
 @Service
 class EmailParserService {
 
-  @Throws(Exception::class)
   fun parseDate(properties: MutableMap<String, String>): String {
     val data = properties["data"]!!
     val hora = properties["hora"]!!
 
-    var dataFormatada = data
-    dataFormatada += " "
-    dataFormatada += hora
-    return dataFormatada
+    return data.plus(" ").plus(hora)
 
 //    val dataInt = data.split("/").map { it.toInt() }
 //    val horaInt = hora.split(":").map { it.toInt() }
