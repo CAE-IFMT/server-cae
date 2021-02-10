@@ -1,6 +1,7 @@
 package br.edu.ifmt.controledeacesso.services
 
 import br.edu.ifmt.controledeacesso.models.dto.VisitaDTO
+import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
 import br.edu.ifmt.controledeacesso.models.entities.Visita
 import br.edu.ifmt.controledeacesso.repositories.VisitaRepository
 import org.modelmapper.ModelMapper
@@ -23,10 +24,10 @@ class VisitaService(
     return repository.findAll().map(this::buildDTO)
   }
 
-  fun save(visitaDTO: VisitaDTO): VisitaDTO {
+  fun save(visitaDTO: VisitaSaveDTO): VisitaDTO {
     val visita = modelMapper.map(visitaDTO, Visita::class.java)
     repository.save(visita)
-    return visitaDTO
+    return modelMapper.map(visita, VisitaDTO::class.java)
   }
 
   private fun buildDTO(visita: Visita): VisitaDTO {
