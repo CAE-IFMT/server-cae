@@ -18,10 +18,16 @@ data class Visita(
   var data: LocalDate,
   var motivo: String,
   var ocorrido: Boolean,
-  @ManyToOne
+  @ManyToOne(
+    cascade = [CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH],
+    fetch = FetchType.EAGER
+  )
   @JoinColumn(name = "professor_id")
   var professor: Professor?,
-  @ManyToOne
+  @ManyToOne(
+    cascade = [CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH],
+    fetch = FetchType.EAGER
+  )
   @JoinColumn(name = "visitante_id")
   var visitante: Visitante?,
 )

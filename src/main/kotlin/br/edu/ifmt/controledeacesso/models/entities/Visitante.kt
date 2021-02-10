@@ -23,7 +23,10 @@ data class Visitante(
   @NotBlank(message = "O cpf é necessário")
   var cpf: String,
 ) {
-  @OneToMany(mappedBy = "visitante")
+  @OneToMany(
+    mappedBy = "visitante",
+    fetch = FetchType.EAGER
+  )
   var visitas: MutableList<Visita> = mutableListOf()
 
   fun adicionaVisita(visita: Visita) {

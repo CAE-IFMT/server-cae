@@ -54,11 +54,21 @@ class VisitaService(
       dto.visitante.email,
       dto.visitante.cpf
     )
-    visita.visitante = visitanteConsulta
-      .orElseGet {
-        val obj = modelMapper.map(dto.visitante, Visitante::class.java)
-        visitanteRepository.save(obj)
-      }
+
+    if(visitanteConsulta.isPresent) {
+      val visitante = visitanteConsulta.get()
+      visitante.adicionaVisita(visita)
+    }
+    else {
+      val obj = visitanteRepository.save(modelMapper.map(dto.visitante, Visitante::class.java))
+      obj.adicionaVisita(visita)
+    }
+//
+//    visita.visitante = visitanteConsulta
+//      .orElseGet {
+//        val obj = modelMapper.map(dto.visitante, Visitante::class.java)
+//        visitanteRepository.save(obj)
+//      }
   }
 
   private fun addProfessor(visita: Visita, dto: VisitaSaveDTO) {
@@ -68,9 +78,12 @@ class VisitaService(
       dto.professor.email
     )
 
-    visita.professor = professorConsulta.orElseGet{
-      val obj = modelMapper.map(dto.professor, Professor::class.java)
-      professorRepository.save(obj)
+    if (professorConsulta.isPresent) {
+      val professor = professorConsulta.get()
+      professor.adicionaVisita(visita)
+    } else {
+      val obj = professorRepository.save(modelMapper.map(dto.professor, Professor::class.java))
+      obj.adicionaVisita(visita)
     }
   }
 

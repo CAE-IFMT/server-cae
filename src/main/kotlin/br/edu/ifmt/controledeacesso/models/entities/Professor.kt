@@ -22,7 +22,10 @@ data class Professor(
   var email: String,
 ) {
 
-  @OneToMany(mappedBy = "professor")
+  @OneToMany(
+    mappedBy = "professor",
+    fetch = FetchType.EAGER
+  )
   var visitas: MutableList<Visita> = mutableListOf()
 
   fun adicionaVisita(visita: Visita) {
