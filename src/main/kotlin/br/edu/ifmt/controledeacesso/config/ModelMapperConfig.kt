@@ -1,10 +1,7 @@
 package br.edu.ifmt.controledeacesso.config
 
-import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
-import br.edu.ifmt.controledeacesso.models.entities.Visita
 import org.modelmapper.AbstractConverter
 import org.modelmapper.ModelMapper
-import org.modelmapper.PropertyMap
 import org.modelmapper.convention.MatchingStrategies
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -27,14 +24,7 @@ class ModelMapperConfig {
   @Bean
   fun modelMapper(): ModelMapper {
     val mapper = ModelMapper()
-    mapper.configuration.matchingStrategy = MatchingStrategies.STRICT
-
-
-    mapper.addMappings(object : PropertyMap<VisitaSaveDTO, Visita>() {
-      override fun configure() {
-        skip(destination.data)
-      }
-    })
+    mapper.configuration.matchingStrategy = MatchingStrategies.STANDARD
 
     mapper.addConverter(stringToLocalDateTimeConverter())
     mapper.addConverter(localDateTimeToStringConverter())
