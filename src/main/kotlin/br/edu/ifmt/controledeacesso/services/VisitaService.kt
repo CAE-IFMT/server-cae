@@ -2,8 +2,12 @@ package br.edu.ifmt.controledeacesso.services
 
 import br.edu.ifmt.controledeacesso.models.dto.VisitaDTO
 import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
+import br.edu.ifmt.controledeacesso.models.entities.Professor
 import br.edu.ifmt.controledeacesso.models.entities.Visita
+import br.edu.ifmt.controledeacesso.models.entities.Visitante
+import br.edu.ifmt.controledeacesso.repositories.ProfessorRepository
 import br.edu.ifmt.controledeacesso.repositories.VisitaRepository
+import br.edu.ifmt.controledeacesso.repositories.VisitanteRepository
 import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 
@@ -17,6 +21,8 @@ import org.springframework.stereotype.Service
 @Service
 class VisitaService(
   private val repository: VisitaRepository,
+  private val visitanteRepository: VisitanteRepository,
+  private val professorRepository: ProfessorRepository,
   private val modelMapper: ModelMapper,
 ) {
 
@@ -25,9 +31,44 @@ class VisitaService(
   }
 
   fun save(visitaDTO: VisitaSaveDTO): VisitaDTO {
-    val visita = modelMapper.map(visitaDTO, Visita::class.java)
+    val visita = parseDTO(visitaDTO)
     repository.save(visita)
     return modelMapper.map(visita, VisitaDTO::class.java)
+  }
+
+  private fun parseDTO(dto: VisitaSaveDTO): Visita {
+    val visita = modelMapper.map(dto, Visita::class.java)
+      ?: throw IllegalStateException("Algo deu errado durante a construção da Visita")
+    addProfessor(visita, dto)
+    addVisitante(visita, dto)
+    return visita
+  }
+
+  private fun addVisitante(visita: Visita, dto: VisitaSaveDTO) {
+
+    val visitanteConsulta = visitanteRepository.findByNomeAndEmailAndCpf(
+      dto.visitante.nome,
+      dto.visitante.email,
+      dto.visitante.cpf
+    )
+    visita.visitante = visitanteConsulta
+      .orElseGet {
+        val obj = modelMapper.map(dto.visitante, Visitante::class.java)
+        visitanteRepository.save(obj)
+      }
+  }
+
+  private fun addProfessor(visita: Visita, dto: VisitaSaveDTO) {
+
+    val professorConsulta = professorRepository.findByEmailAndNome(
+      dto.professor.nome,
+      dto.professor.email
+    )
+
+    visita.professor = professorConsulta.orElseGet{
+      val obj = modelMapper.map(dto.professor, Professor::class.java)
+      professorRepository.save(obj)
+    }
   }
 
   private fun buildDTO(visita: Visita): VisitaDTO {
