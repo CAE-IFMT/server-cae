@@ -68,7 +68,7 @@ class EmailService(
       // TODO: implementar envio de email para professor e visitante
 
     } catch (exception: Exception) {
-      //exception.printStackTrace()
+      exception.printStackTrace()
       print(exception.message)
     } finally {
 
