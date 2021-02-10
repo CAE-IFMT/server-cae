@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter
 @Configuration
 class ModelMapperConfig {
 
-  private var diaMesAnoHoraMinSegFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
+  private var diaMesAnoHoraMinFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
 
 
   @Bean
@@ -35,7 +35,7 @@ class ModelMapperConfig {
         if (src == null) {
           return null
         }
-        return diaMesAnoHoraMinSegFormatter.format(src)
+        return diaMesAnoHoraMinFormatter.format(src)
       }
     }
   }
@@ -46,7 +46,7 @@ class ModelMapperConfig {
         if (src == null) {
           return null
         }
-        return LocalDateTime.parse(src, diaMesAnoHoraMinSegFormatter)
+        return LocalDateTime.parse(src, diaMesAnoHoraMinFormatter)
       }
     }
   }
