@@ -60,8 +60,8 @@ class EmailService(
       val professor = ProfessorDTO(null, properties["professor"]!!, from)
       val visita = VisitaSaveDTO(data, properties["motivo"]!!, false, professor, visitante)
 
-      println(visita)
-      // TODO: implementar persistência da nova visita no banco
+      visitaService.save(visita)
+
       // TODO: implementar envio de email para professor e visitante
 
     } catch (exception: Exception) {
