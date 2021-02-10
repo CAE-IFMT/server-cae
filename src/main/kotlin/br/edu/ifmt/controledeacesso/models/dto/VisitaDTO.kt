@@ -1,7 +1,7 @@
 package br.edu.ifmt.controledeacesso.models.dto
 
 import br.edu.ifmt.controledeacesso.config.NoArg
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 /**
  * Representa uma abstração pública da entidade Visita <br>
@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 @NoArg
 data class VisitaDTO(
   var id: Long,
-  var data: LocalDateTime?,
+  var data: LocalDate?,
   var motivo: String,
   var ocorrido: Boolean,
   var professor: ProfessorDTO,
