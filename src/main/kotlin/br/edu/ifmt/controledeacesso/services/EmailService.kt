@@ -48,9 +48,6 @@ class EmailService(
   fun createVisita(from: String, subject: String, body: String) {
     try {
       val properties = parserService.parseBody(body)
-      val data = "${properties["data"]} ${properties["hora"]}"
-
-      assert(data == "${properties["data"]} ${properties["hora"]}")
 
       val visitante = VisitanteDTO(
         null,
@@ -58,18 +55,13 @@ class EmailService(
         properties["email_visitante"]!!,
         properties["cpf"]!!
       )
-
       val professor = ProfessorDTO(null, properties["professor"]!!, from)
       val visita = VisitaSaveDTO(
-        "02/02/2020 15:50",
+        properties["data"]!!,
         properties["motivo"]!!,
         professor,
         visitante
       )
-
-      println(data)
-      println("${properties["data"]} ${properties["hora"]}")
-      println(visita.data)
 
       visitaService.save(visita)
 

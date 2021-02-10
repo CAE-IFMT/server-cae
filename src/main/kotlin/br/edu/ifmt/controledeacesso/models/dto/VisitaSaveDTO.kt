@@ -9,7 +9,7 @@ import br.edu.ifmt.controledeacesso.config.NoArg
  * @version 1.0.0
  */
 @NoArg
-class VisitaSaveDTO(
+data class VisitaSaveDTO(
   var data: String,
   var motivo: String,
   var professor: ProfessorDTO,

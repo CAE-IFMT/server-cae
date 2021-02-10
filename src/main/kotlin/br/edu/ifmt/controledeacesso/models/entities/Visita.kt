@@ -12,7 +12,7 @@ import javax.persistence.*
  */
 @Entity
 @NoArg
-class Visita(
+data class Visita(
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   var id: Long?,
   var data: LocalDateTime?,
