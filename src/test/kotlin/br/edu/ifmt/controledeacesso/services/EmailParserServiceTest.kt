@@ -22,6 +22,7 @@ class EmailParserServiceTest{
 
     val body = """
       professor=Gabriel José Curvo Honda
+      
       visitante=Carlos Henrique
       email_visitante=carlos@email.com
       cpf=000.000.000-10
@@ -46,8 +47,8 @@ class EmailParserServiceTest{
     map["data"] = "20/01/2021"
     map["hora"] = "15:30"
 
-    val response = parserService.parseDate(map)
+    val data = parserService.parseDate(map)
 
-    assertEquals("20/01/2021 15:30:00", response)
+    assertEquals("20/01/2021 15:30", data)
   }
 }
