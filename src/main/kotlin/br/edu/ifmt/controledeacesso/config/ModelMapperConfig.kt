@@ -31,7 +31,7 @@ class ModelMapperConfig {
 
     mapper.addMappings(object : PropertyMap<VisitaSaveDTO, Visita>() {
       override fun configure() {
-        skip(source.data, destination.data)
+        skip(destination.data)
       }
     })
 
