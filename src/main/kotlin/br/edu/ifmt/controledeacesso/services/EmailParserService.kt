@@ -1,7 +1,6 @@
 package br.edu.ifmt.controledeacesso.services
 
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
 
 /**
  * @project cae-api
@@ -9,23 +8,6 @@ import java.time.LocalDateTime
  */
 @Service
 class EmailParserService {
-
-  fun parseDate(properties: MutableMap<String, String>): String {
-    val data = properties["data"]!!
-    val hora = properties["hora"]!!
-
-    return data.plus(" ").plus(hora)
-
-//    val dataInt = data.split("/").map { it.toInt() }
-//    val horaInt = hora.split(":").map { it.toInt() }
-//
-//    return toLocalDate(dataInt[2], dataInt[1], dataInt[0], horaInt[0], horaInt[1])
-  }
-
-  @Throws(Exception::class)
-  private fun toLocalDate(ano: Int, mes: Int, dia: Int, hora: Int, minuto: Int) =
-    LocalDateTime.of(ano, mes, dia, hora, minuto)
-
   @Throws(Exception::class)
   fun parseBody(mensagem: String): MutableMap<String, String> {
     val values = mensagem

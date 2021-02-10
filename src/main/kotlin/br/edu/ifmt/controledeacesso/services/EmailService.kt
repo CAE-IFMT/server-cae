@@ -47,32 +47,31 @@ class EmailService(
 
   fun createVisita(from: String, subject: String, body: String) {
     try {
-      val properties = parserService.parseBody(body)
-
-      val visitante = VisitanteDTO(
-        null,
-        properties["visitante"]!!,
-        properties["email_visitante"]!!,
-        properties["cpf"]!!
-      )
-      val professor = ProfessorDTO(null, properties["professor"]!!, from)
-      val visita = VisitaSaveDTO(
-        properties["data"]!!,
-        properties["motivo"]!!,
-        professor,
-        visitante
-      )
-
+      val visita = buildDTO(body, from)
       visitaService.save(visita)
-
       // TODO: implementar envio de email para professor e visitante
 
     } catch (exception: Exception) {
-      exception.printStackTrace()
       print(exception.message)
     } finally {
-
     }
+  }
 
+  private fun buildDTO(body: String, from: String): VisitaSaveDTO {
+    val properties = parserService.parseBody(body)
+
+    val visitante = VisitanteDTO(
+      null,
+      properties["visitante"]!!,
+      properties["email_visitante"]!!,
+      properties["cpf"]!!
+    )
+    val professor = ProfessorDTO(null, properties["professor"]!!, from)
+    return VisitaSaveDTO(
+      properties["data"]!!,
+      properties["motivo"]!!,
+      professor,
+      visitante
+    )
   }
 }

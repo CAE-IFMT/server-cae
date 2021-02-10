@@ -28,7 +28,10 @@ class ModelMapperConfig {
   fun modelMapper(): ModelMapper {
     val mapper = ModelMapper()
     mapper.configuration.matchingStrategy = MatchingStrategies.STANDARD
-
+    /**
+     * Corrige bug da concatenação de String VisitaSaveDTO.data -> Visita.data
+     * https://stackoverflow.com/questions/37698527/how-to-skip-a-field-during-map-stage
+     */
     mapper
       .typeMap(VisitaSaveDTO::class.java, Visita::class.java)
       .addMappings(object :

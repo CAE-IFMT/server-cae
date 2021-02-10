@@ -1,6 +1,7 @@
 package br.edu.ifmt.controledeacesso.controllers
 
 import br.edu.ifmt.controledeacesso.services.EmailService
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -23,15 +24,9 @@ class EmailController(private val emailService: EmailService) {
     @RequestParam(value = "from") from: String,
     @RequestParam(value = "subject") subject: String,
     @RequestParam(value = "body-plain") body: String
-  ): String {
-
-    println("FROM: $from")
-    println("SUBJECT: $subject")
-    println("-".repeat(30))
-    println(body)
-    println("-".repeat(30))
+  ): ResponseEntity<String> {
     emailService.createVisita(from, subject, body)
-    return "post received"
+    return ResponseEntity.ok("Visita criada com sucesso!")
   }
 
 }
