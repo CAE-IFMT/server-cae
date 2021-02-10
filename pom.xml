@@ -129,6 +129,7 @@
                         <plugin>spring</plugin>
                         <plugin>jpa</plugin>
                         <plugin>no-arg</plugin>
+                        <plugin>all-open</plugin>
                     </compilerPlugins>
                     <pluginOptions>
                         <option>no-arg:annotation=br.edu.ifmt.controledeacesso.config.NoArg</option>
