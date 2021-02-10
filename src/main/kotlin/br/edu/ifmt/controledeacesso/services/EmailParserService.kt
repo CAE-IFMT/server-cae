@@ -18,7 +18,6 @@ class EmailParserService {
     var dataFormatada = data
     dataFormatada += " "
     dataFormatada += hora
-    println(dataFormatada)
     return dataFormatada
 
 //    val dataInt = data.split("/").map { it.toInt() }
