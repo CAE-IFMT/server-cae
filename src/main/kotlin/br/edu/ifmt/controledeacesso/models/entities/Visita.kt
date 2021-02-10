@@ -15,7 +15,7 @@ import javax.persistence.*
 data class Visita(
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   var id: Long?,
-  var data: LocalDate?,
+  var data: LocalDate,
   var motivo: String,
   var ocorrido: Boolean,
   @ManyToOne

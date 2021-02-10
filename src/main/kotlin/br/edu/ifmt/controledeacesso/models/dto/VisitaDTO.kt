@@ -13,7 +13,7 @@ import java.time.LocalDate
 @NoArg
 data class VisitaDTO(
   var id: Long,
-  var data: LocalDate?,
+  var data: LocalDate,
   var motivo: String,
   var ocorrido: Boolean,
   var professor: ProfessorDTO,
