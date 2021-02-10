@@ -1,11 +1,11 @@
 package br.edu.ifmt.controledeacesso.controllers
 
 import br.edu.ifmt.controledeacesso.models.dto.VisitaDTO
+import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
 import br.edu.ifmt.controledeacesso.services.VisitaService
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.util.UriComponentsBuilder
 
 /**
  * Controlador responsável pela gestão dos endpoints referentes à entidade Visita
@@ -26,4 +26,12 @@ class VisitaController(private val service: VisitaService) {
     return ResponseEntity.ok(visitas)
   }
 
+  @PostMapping
+  fun save(
+    @RequestBody dto: VisitaSaveDTO,
+    uriComponentsBuilder: UriComponentsBuilder,
+  ): ResponseEntity<VisitaDTO> {
+    val visita =  service.save(dto)
+    return ResponseEntity.ok(visita)
+  }
 }
