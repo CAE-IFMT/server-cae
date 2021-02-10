@@ -5,10 +5,10 @@ import org.modelmapper.ModelMapper
 import org.modelmapper.convention.MatchingStrategies
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import java.time.DateTimeException
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
-
+import java.time.format.DateTimeParseException
 
 
 /**
@@ -35,10 +35,14 @@ class ModelMapperConfig {
   private fun localDateTimeToStringConverter(): AbstractConverter<LocalDateTime, String> {
     return object : AbstractConverter<LocalDateTime, String>() {
       override fun convert(src: LocalDateTime?): String? {
-        if (src == null) {
+        try {
+          if (src == null)
+            return null
+          return diaMesAnoHoraMinFormatter.format(src)
+        } catch (e: DateTimeException) {
+          println(e.message)
           return null
         }
-        return diaMesAnoHoraMinFormatter.format(src)
       }
     }
   }
@@ -46,10 +50,15 @@ class ModelMapperConfig {
   private fun stringToLocalDateTimeConverter(): AbstractConverter<String, LocalDateTime> {
     return object : AbstractConverter<String, LocalDateTime>() {
       override fun convert(src: String?): LocalDateTime? {
-        if (src == null) {
+        try {
+          if (src == null) {
+            return null
+          }
+          return LocalDateTime.parse(src, diaMesAnoHoraMinFormatter)
+        } catch (e: DateTimeParseException) {
+          println(e.message)
           return null
         }
-        return LocalDateTime.parse(src, diaMesAnoHoraMinFormatter)
       }
     }
   }
