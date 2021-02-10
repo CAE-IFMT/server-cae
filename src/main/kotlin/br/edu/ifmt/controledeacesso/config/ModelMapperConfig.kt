@@ -29,11 +29,14 @@ class ModelMapperConfig {
     val mapper = ModelMapper()
     mapper.configuration.matchingStrategy = MatchingStrategies.STANDARD
 
-    mapper.addMappings(object : PropertyMap<VisitaSaveDTO, Visita>() {
-      override fun configure() {
-        skip(destination.data)
-      }
-    })
+    mapper
+      .typeMap(VisitaSaveDTO::class.java, Visita::class.java)
+      .addMappings(object :
+        PropertyMap<VisitaSaveDTO, Visita>() {
+        override fun configure() {
+          skip(destination.data)
+        }
+      })
 
     mapper.addConverter(stringToLocalDateTimeConverter())
     mapper.addConverter(localDateTimeToStringConverter())
