@@ -9,6 +9,7 @@ import br.edu.ifmt.controledeacesso.repositories.ProfessorRepository
 import br.edu.ifmt.controledeacesso.repositories.VisitaRepository
 import br.edu.ifmt.controledeacesso.repositories.VisitanteRepository
 import org.modelmapper.ModelMapper
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 /**
@@ -23,7 +24,7 @@ class VisitaService(
   private val repository: VisitaRepository,
   private val visitanteRepository: VisitanteRepository,
   private val professorRepository: ProfessorRepository,
-  private val modelMapper: ModelMapper,
+  @Autowired private val modelMapper: ModelMapper,
 ) {
 
   fun findAll(): List<VisitaDTO> {
