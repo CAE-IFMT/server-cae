@@ -32,6 +32,7 @@ class EmailParserService {
   fun parseBody(mensagem: String): MutableMap<String, String> {
     val values = mensagem
       .split("\n")
+      .filter { str -> str.isNotBlank() || str.isNotEmpty()}
       .map { str -> str.split("=") }
     return createMap(values)
   }

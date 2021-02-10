@@ -66,6 +66,7 @@ class EmailService(
 
     } catch (exception: Exception) {
       exception.printStackTrace()
+      print(exception.message)
     } finally {
 
     }
