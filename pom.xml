@@ -132,7 +132,7 @@
                         <plugin>all-open</plugin>
                     </compilerPlugins>
                     <pluginOptions>
-                        <option>all-open:annotation:br.edu.ifmt.controledeacesso.config.NoArg</option>
+                        <option>all-open:annotation=br.edu.ifmt.controledeacesso.config.NoArg</option>
                         <option>no-arg:annotation=br.edu.ifmt.controledeacesso.config.NoArg</option>
                         <option>no-arg:invokeInitializers=true</option>
                     </pluginOptions>
