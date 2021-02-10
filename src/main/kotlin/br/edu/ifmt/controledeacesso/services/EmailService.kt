@@ -48,7 +48,7 @@ class EmailService(
   fun createVisita(from: String, subject: String, body: String) {
     try {
       val properties = parserService.parseBody(body)
-      val data = parserService.parseDate(properties)
+      val data = "${properties["data"]} ${properties["hora"]}"
 
       assert(data == "${properties["data"]} ${properties["hora"]}")
 
@@ -68,6 +68,7 @@ class EmailService(
       )
 
       println(data)
+      println("${properties["data"]} ${properties["hora"]}")
       println(visita.data)
 
       visitaService.save(visita)
