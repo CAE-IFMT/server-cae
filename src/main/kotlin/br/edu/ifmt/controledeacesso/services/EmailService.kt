@@ -1,6 +1,7 @@
 package br.edu.ifmt.controledeacesso.services
 
 import br.edu.ifmt.controledeacesso.models.dto.ProfessorDTO
+import br.edu.ifmt.controledeacesso.models.dto.VisitaDTO
 import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
 import br.edu.ifmt.controledeacesso.models.dto.VisitanteDTO
 import net.glxn.qrgen.core.image.ImageType
@@ -8,7 +9,9 @@ import net.glxn.qrgen.javase.QRCode
 import net.sargue.mailgun.MailBuilder
 import org.springframework.stereotype.Service
 import java.io.File
-import java.util.*
+import java.util.regex.Pattern
+import java.util.stream.Collectors
+
 
 /**
  * Interface que define regras de negócio relacionadas
@@ -24,37 +27,77 @@ class EmailService(
   private val builder: MailBuilder,
 ) {
 
-  private fun createQRCode(): File {
-    return QRCode.from(UUID.randomUUID().toString())
+  private fun createQRCode(visita: VisitaDTO): File {
+    return QRCode.from(visita.toString())
       .to(ImageType.JPG)
       .withCharset("UTF-8")
       .withSize(400, 400)
       .file()
   }
 
-  private fun sendEmail(email: String) {
-    val qrcode = createQRCode()
+//  private fun sendEmail(email: String) {
+//    val qrcode = createQRCode()
+//
+//    builder
+//      .to(email)
+//      .subject("QRCode de autenticação")
+//      .text("Permissão de entrada para o Instituto Federal de Mato Grosso")
+//      .multipart()
+//      .attachment(qrcode)
+//      .build()
+//      .send()
+//  }
 
-    builder
-      .to(email)
-      .subject("QRCode de autenticação")
-      .text("Permissão de entrada para o Instituto Federal de Mato Grosso")
-      .multipart()
-      .attachment(qrcode)
+  fun createVisita(from: String, subject: String, body: String) {
+    try {
+      val dto = this.buildDTO(body, from)
+
+      val visita = visitaService.save(dto)
+
+      sendEmailToProfessor(from, visita)
+      sendEmailToVisitante(visita)
+
+    } catch (exception: Exception) {
+      print(exception.message)
+    }
+  }
+
+  private fun sendEmailToProfessor(from: String, visita: VisitaDTO) {
+    val email = this.extractEmail(from)
+    writeEmail(
+      email,
+      "Permissão de entrada no IFMT",
+      "Permissão de entrada para o Instituto Federal de Mato Grosso agendada para " +
+          "${visita.visitante.nome} por ${visita.professor.nome} no dia ${visita.data}.",
+    ).build().send()
+  }
+
+  private fun sendEmailToVisitante(visita: VisitaDTO) {
+    val qrCode = this.createQRCode(visita)
+    writeEmail(
+      visita.visitante.email,
+      "QRCode para entrada no IFMT",
+      "Permissão de entrada para o Instituto Federal de Mato Grosso"
+    ).multipart()
+      .attachment(qrCode)
       .build()
       .send()
   }
 
-  fun createVisita(from: String, subject: String, body: String) {
-    try {
-      val visita = buildDTO(body, from)
-      visitaService.save(visita)
-      // TODO: implementar envio de email para professor e visitante
+  private fun writeEmail(email: String, subject: String, text: String): MailBuilder {
+    return builder.to(email)
+      .subject(subject)
+      .text(text)
+  }
 
-    } catch (exception: Exception) {
-      print(exception.message)
-    } finally {
-    }
+  private fun extractEmail(from: String): String {
+    val split = Pattern.compile("[<>]")
+      .splitAsStream(from)
+      .collect(Collectors.toList())
+    val email = split[1]
+    if (!email.contains("@"))
+      throw IllegalStateException("Não será possível enviar notificação por email $email")
+    return email
   }
 
   private fun buildDTO(body: String, from: String): VisitaSaveDTO {
