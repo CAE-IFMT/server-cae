@@ -107,6 +107,12 @@
             <groupId>org.glassfish.jersey.ext</groupId>
             <artifactId>jersey-spring4</artifactId>
         </dependency>
+        <!--Log-->
+        <dependency>
+            <groupId>io.github.microutils</groupId>
+            <artifactId>kotlin-logging</artifactId>
+            <version>1.12.0</version>
+        </dependency>
     </dependencies>
 
     <build>
