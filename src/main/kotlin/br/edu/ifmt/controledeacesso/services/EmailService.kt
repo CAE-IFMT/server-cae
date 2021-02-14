@@ -28,7 +28,7 @@ class EmailService(
 ) {
 
   private fun createQRCode(visita: VisitaDTO): File {
-    return QRCode.from(visita.toString())
+    return QRCode.from(visita.visitante.nome)
       .to(ImageType.JPG)
       .withCharset("UTF-8")
       .withSize(400, 400)
@@ -53,6 +53,8 @@ class EmailService(
       val dto = this.buildDTO(body, from)
 
       val visita = visitaService.save(dto)
+
+      println(visita)
 
       sendEmailToProfessor(from, visita)
       sendEmailToVisitante(visita)
