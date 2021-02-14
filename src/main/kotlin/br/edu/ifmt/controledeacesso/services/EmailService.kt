@@ -4,6 +4,7 @@ import br.edu.ifmt.controledeacesso.models.dto.ProfessorDTO
 import br.edu.ifmt.controledeacesso.models.dto.VisitaDTO
 import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
 import br.edu.ifmt.controledeacesso.models.dto.VisitanteDTO
+import mu.KotlinLogging
 import net.glxn.qrgen.core.image.ImageType
 import net.glxn.qrgen.javase.QRCode
 import net.sargue.mailgun.Configuration
@@ -26,7 +27,7 @@ class EmailService(
   private val visitaService: VisitaService,
   private val parserService: EmailParserService,
 ) {
-
+  private val logger = KotlinLogging.logger {  }
   private val apiDomain = "sandbox5538a24e2fa84912aee78c7f4310084a.mailgun.org"
   private val apiKey = "cc1b19fdc04e0c93883adac0c05e73ec-07bc7b05-d6b73865"
 
@@ -55,11 +56,11 @@ class EmailService(
     try {
       val dto = this.buildDTO(body, from)
 
-      print(dto)
+      logger.info { "Criado DTO: $dto" }
 
       val visita = visitaService.save(dto)
 
-      println(visita)
+      logger.info { "Visita persistida com sucesso: $visita" }
 
       sendEmailToProfessor(from, visita)
       sendEmailToVisitante(visita)
@@ -71,6 +72,7 @@ class EmailService(
 
   private fun sendEmailToProfessor(from: String, visita: VisitaDTO) {
     val email = this.extractEmail(from)
+    logger.info { "Enviando email para $email" }
     val response =
       Mail.using(
         Configuration()
@@ -85,11 +87,14 @@ class EmailService(
         )
         .build()
         .send()
-    println(response)
+    logger.info { "Email enviado ${response.responseMessage()}" }
   }
 
   private fun sendEmailToVisitante(visita: VisitaDTO) {
     val qrCode = this.createQRCode(visita)
+
+    logger.info { "Email enviado para ${visita.visitante.email}" }
+
     val response = Mail.using(
       Configuration()
         .domain(apiDomain)
@@ -103,7 +108,7 @@ class EmailService(
       .attachment(qrCode)
       .build()
       .send()
-    println(response)
+    logger.info { "Email enviado ${response.responseMessage()}" }
   }
 
 //  private fun writeEmail(email: String, subject: String, text: String): MailBuilder {
