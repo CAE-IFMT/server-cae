@@ -64,17 +64,18 @@ class EmailService(
 
   private fun sendEmailToProfessor(from: String, visita: VisitaDTO) {
     val email = this.extractEmail(from)
-    writeEmail(
+    val response = writeEmail(
       email,
       "Permissão de entrada no IFMT",
       "Permissão de entrada para o Instituto Federal de Mato Grosso agendada para " +
           "${visita.visitante.nome} por ${visita.professor.nome} no dia ${visita.data}.",
     ).build().send()
+    println(response)
   }
 
   private fun sendEmailToVisitante(visita: VisitaDTO) {
     val qrCode = this.createQRCode(visita)
-    writeEmail(
+    val response = writeEmail(
       visita.visitante.email,
       "QRCode para entrada no IFMT",
       "Permissão de entrada para o Instituto Federal de Mato Grosso"
@@ -82,6 +83,7 @@ class EmailService(
       .attachment(qrCode)
       .build()
       .send()
+    println(response)
   }
 
   private fun writeEmail(email: String, subject: String, text: String): MailBuilder {
