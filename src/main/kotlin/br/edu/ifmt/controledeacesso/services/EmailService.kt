@@ -7,8 +7,7 @@ import br.edu.ifmt.controledeacesso.models.dto.VisitanteDTO
 import mu.KotlinLogging
 import net.glxn.qrgen.core.image.ImageType
 import net.glxn.qrgen.javase.QRCode
-import net.sargue.mailgun.Configuration
-import net.sargue.mailgun.Mail
+import net.sargue.mailgun.MailBuilder
 import org.springframework.stereotype.Service
 import java.io.File
 import java.util.regex.Pattern
@@ -26,10 +25,9 @@ import java.util.stream.Collectors
 class EmailService(
   private val visitaService: VisitaService,
   private val parserService: EmailParserService,
+  private val mailBuilder: MailBuilder,
 ) {
-  private val logger = KotlinLogging.logger {  }
-  private val apiDomain = "sandbox5538a24e2fa84912aee78c7f4310084a.mailgun.org"
-  private val apiKey = "cc1b19fdc04e0c93883adac0c05e73ec-07bc7b05-d6b73865"
+  private val logger = KotlinLogging.logger { }
 
   private fun createQRCode(visita: VisitaDTO): File {
     return QRCode.from(visita.visitante.nome)
@@ -73,20 +71,15 @@ class EmailService(
   private fun sendEmailToProfessor(from: String, visita: VisitaDTO) {
     val email = this.extractEmail(from)
     logger.info { "Enviando email para $email" }
-    val response =
-      Mail.using(
-        Configuration()
-          .domain(apiDomain)
-          .apiKey(apiKey)
-          .from("Suporte CAE-IFMT", "suporte@$apiDomain")
-      ).to(email)
-        .subject("Permissão de entrada no IFMT")
-        .text(
-          "Permissão de entrada para o Instituto Federal de Mato Grosso agendada " +
-              "para ${visita.visitante.nome} por ${visita.professor.nome} no dia ${visita.data}."
-        )
-        .build()
-        .send()
+    val response = mailBuilder
+      .to(email)
+      .subject("Permissão de entrada no IFMT")
+      .text(
+        "Permissão de entrada para o Instituto Federal de Mato Grosso agendada " +
+            "para ${visita.visitante.nome} por ${visita.professor.nome} no dia ${visita.data}."
+      )
+      .build()
+      .send()
     logger.info { "Email enviado ${response.responseMessage()}" }
   }
 
@@ -95,12 +88,7 @@ class EmailService(
 
     logger.info { "Email enviado para ${visita.visitante.email}" }
 
-    val response = Mail.using(
-      Configuration()
-        .domain(apiDomain)
-        .apiKey(apiKey)
-        .from("Suporte CAE-IFMT", "suporte@$apiDomain")
-    )
+    val response = mailBuilder
       .to(visita.visitante.email)
       .subject("QRCode para entrada no IFMT")
       .text("Permissão de entrada para o Instituto Federal de Mato Grosso")
@@ -137,8 +125,11 @@ class EmailService(
       properties["cpf"]!!
     )
     val professor = ProfessorDTO(null, properties["professor"]!!, from)
+
+    val data: String = properties["data"]!!.toString()
+
     return VisitaSaveDTO(
-      "02/10/2021",
+      data,
       properties["motivo"]!!,
       professor,
       visitante
