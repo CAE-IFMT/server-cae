@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.PropertySource
-import net.sargue.mailgun.Configuration as MailGunConfig
 
 /**
  * Define beans e configurações relacionadas ao MailGun
@@ -29,7 +28,7 @@ class MailGunConfig {
 
   @Bean
   fun mailBuilder(): MailBuilder = Mail.using(
-    MailGunConfig()
+    net.sargue.mailgun.Configuration()
       .domain(apiDomain)
       .apiKey(apiKey)
       .from("Suporte CAE-IFMT", "suporte@$apiDomain")
