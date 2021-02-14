@@ -52,6 +52,8 @@ class EmailService(
     try {
       val dto = this.buildDTO(body, from)
 
+      print(dto)
+
       val visita = visitaService.save(dto)
 
       println(visita)
