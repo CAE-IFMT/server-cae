@@ -18,7 +18,7 @@ import java.time.LocalDateTime
  * @author daohn on 06/02/2021
  */
 @Configuration
-@Profile("docker", "localhost")
+@Profile("docker", "localhost", "heroku")
 class DatabaseConfig(
   private val professorRepository: ProfessorRepository,
   private val usuarioRepository: UsuarioRepository,
