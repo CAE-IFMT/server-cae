@@ -1,6 +1,6 @@
-package br.edu.ifmt.controledeacesso.services
+package br.edu.ifmt.controledeacesso.domain.services
 
-import br.edu.ifmt.controledeacesso.models.dto.VisitaDTO
+import br.edu.ifmt.controledeacesso.domain.dto.VisitaDTO
 import mu.KotlinLogging
 import net.glxn.qrgen.core.image.ImageType
 import net.glxn.qrgen.javase.QRCode

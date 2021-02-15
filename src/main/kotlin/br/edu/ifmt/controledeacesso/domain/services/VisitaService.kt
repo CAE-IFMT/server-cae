@@ -1,14 +1,14 @@
-package br.edu.ifmt.controledeacesso.services
+package br.edu.ifmt.controledeacesso.domain.services
 
+import br.edu.ifmt.controledeacesso.domain.dto.VisitaDTO
+import br.edu.ifmt.controledeacesso.domain.dto.VisitaSaveDTO
+import br.edu.ifmt.controledeacesso.domain.entities.Professor
+import br.edu.ifmt.controledeacesso.domain.entities.Visita
+import br.edu.ifmt.controledeacesso.domain.entities.Visitante
+import br.edu.ifmt.controledeacesso.domain.repositories.ProfessorRepository
+import br.edu.ifmt.controledeacesso.domain.repositories.VisitaRepository
+import br.edu.ifmt.controledeacesso.domain.repositories.VisitanteRepository
 import br.edu.ifmt.controledeacesso.exceptions.ObjectNotFoundException
-import br.edu.ifmt.controledeacesso.models.dto.VisitaDTO
-import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
-import br.edu.ifmt.controledeacesso.models.entities.Professor
-import br.edu.ifmt.controledeacesso.models.entities.Visita
-import br.edu.ifmt.controledeacesso.models.entities.Visitante
-import br.edu.ifmt.controledeacesso.repositories.ProfessorRepository
-import br.edu.ifmt.controledeacesso.repositories.VisitaRepository
-import br.edu.ifmt.controledeacesso.repositories.VisitanteRepository
 import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 

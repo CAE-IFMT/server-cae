@@ -1,6 +1,6 @@
-package br.edu.ifmt.controledeacesso.repositories
+package br.edu.ifmt.controledeacesso.domain.repositories
 
-import br.edu.ifmt.controledeacesso.models.entities.Visitante
+import br.edu.ifmt.controledeacesso.domain.entities.Visitante
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.*

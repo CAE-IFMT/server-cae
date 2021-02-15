@@ -1,8 +1,8 @@
-package br.edu.ifmt.controledeacesso.services
+package br.edu.ifmt.controledeacesso.domain.services
 
-import br.edu.ifmt.controledeacesso.models.dto.ProfessorDTO
-import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
-import br.edu.ifmt.controledeacesso.models.dto.VisitanteDTO
+import br.edu.ifmt.controledeacesso.domain.dto.ProfessorDTO
+import br.edu.ifmt.controledeacesso.domain.dto.VisitaSaveDTO
+import br.edu.ifmt.controledeacesso.domain.dto.VisitanteDTO
 import org.springframework.stereotype.Service
 import java.util.regex.Pattern
 import java.util.stream.Collectors
@@ -14,7 +14,7 @@ import java.util.stream.Collectors
 @Service
 class EmailParserService {
   @Throws(Exception::class)
-  private fun parseBody(mensagem: String): MutableMap<String, String> {
+  fun parseBody(mensagem: String): MutableMap<String, String> {
     val values = mensagem
       .split("\n")
       .filter { str -> str.isNotBlank() || str.isNotEmpty() }

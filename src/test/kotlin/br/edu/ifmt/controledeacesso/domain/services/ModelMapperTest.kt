@@ -1,4 +1,4 @@
-package br.edu.ifmt.controledeacesso.services
+package br.edu.ifmt.controledeacesso.domain.services
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

@@ -1,4 +1,4 @@
-package br.edu.ifmt.controledeacesso.models.dto
+package br.edu.ifmt.controledeacesso.domain.dto
 
 import br.edu.ifmt.controledeacesso.config.NoArg
 

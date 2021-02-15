@@ -1,4 +1,4 @@
-package br.edu.ifmt.controledeacesso.models.entities
+package br.edu.ifmt.controledeacesso.domain.entities
 
 import br.edu.ifmt.controledeacesso.config.NoArg
 import javax.persistence.Entity

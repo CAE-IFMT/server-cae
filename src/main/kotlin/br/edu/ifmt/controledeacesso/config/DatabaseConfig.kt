@@ -1,13 +1,13 @@
 package br.edu.ifmt.controledeacesso.config
 
-import br.edu.ifmt.controledeacesso.models.entities.Professor
-import br.edu.ifmt.controledeacesso.models.entities.Usuario
-import br.edu.ifmt.controledeacesso.models.entities.Visita
-import br.edu.ifmt.controledeacesso.models.entities.Visitante
-import br.edu.ifmt.controledeacesso.repositories.ProfessorRepository
-import br.edu.ifmt.controledeacesso.repositories.UsuarioRepository
-import br.edu.ifmt.controledeacesso.repositories.VisitaRepository
-import br.edu.ifmt.controledeacesso.repositories.VisitanteRepository
+import br.edu.ifmt.controledeacesso.domain.entities.Professor
+import br.edu.ifmt.controledeacesso.domain.entities.Usuario
+import br.edu.ifmt.controledeacesso.domain.entities.Visita
+import br.edu.ifmt.controledeacesso.domain.entities.Visitante
+import br.edu.ifmt.controledeacesso.domain.repositories.ProfessorRepository
+import br.edu.ifmt.controledeacesso.domain.repositories.UsuarioRepository
+import br.edu.ifmt.controledeacesso.domain.repositories.VisitaRepository
+import br.edu.ifmt.controledeacesso.domain.repositories.VisitanteRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile

@@ -1,8 +1,8 @@
-package br.edu.ifmt.controledeacesso.services
+package br.edu.ifmt.controledeacesso.domain.services
 
-import br.edu.ifmt.controledeacesso.models.dto.ProfessorDTO
-import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
-import br.edu.ifmt.controledeacesso.models.dto.VisitanteDTO
+import br.edu.ifmt.controledeacesso.domain.dto.ProfessorDTO
+import br.edu.ifmt.controledeacesso.domain.dto.VisitaSaveDTO
+import br.edu.ifmt.controledeacesso.domain.dto.VisitanteDTO
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

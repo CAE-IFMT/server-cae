@@ -1,8 +1,8 @@
-package br.edu.ifmt.controledeacesso.controllers
+package br.edu.ifmt.controledeacesso.api
 
-import br.edu.ifmt.controledeacesso.models.dto.VisitaDTO
-import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
-import br.edu.ifmt.controledeacesso.services.VisitaService
+import br.edu.ifmt.controledeacesso.domain.dto.VisitaDTO
+import br.edu.ifmt.controledeacesso.domain.dto.VisitaSaveDTO
+import br.edu.ifmt.controledeacesso.domain.services.VisitaService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
@@ -11,7 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder
  * Controlador responsável pela gestão dos endpoints referentes à entidade Visita
  * @see VisitaService
  * @see VisitaDTO
- * @see br.edu.ifmt.controledeacesso.models.entities.Visita
+ * @see br.edu.ifmt.controledeacesso.domain.entities.Visita
  *
  * @project cae-api
  * @author daohn on 06/02/2021

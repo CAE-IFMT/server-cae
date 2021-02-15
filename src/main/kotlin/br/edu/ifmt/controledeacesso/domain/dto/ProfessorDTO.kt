@@ -1,10 +1,10 @@
-package br.edu.ifmt.controledeacesso.models.dto
+package br.edu.ifmt.controledeacesso.domain.dto
 
 import br.edu.ifmt.controledeacesso.config.NoArg
 
 /**
  * Representa uma abstração pública da entidade Professor <br>
- * @see br.edu.ifmt.controledeacesso.models.entities.Professor
+ * @see br.edu.ifmt.controledeacesso.domain.entities.Professor
  *
  * @project cae-api
  * @author daohn on 06/02/2021
