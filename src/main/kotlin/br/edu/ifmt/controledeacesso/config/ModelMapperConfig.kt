@@ -6,7 +6,7 @@ import org.modelmapper.convention.MatchingStrategies
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.time.DateTimeException
-import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
@@ -25,18 +25,6 @@ class ModelMapperConfig {
   fun modelMapper(): ModelMapper {
     val mapper = ModelMapper()
     mapper.configuration.matchingStrategy = MatchingStrategies.STANDARD
-    /**
-     * Corrige bug da concatenação de String VisitaSaveDTO.data -> Visita.data
-     * https://stackoverflow.com/questions/37698527/how-to-skip-a-field-during-map-stage
-     */
-//    mapper
-//      .typeMap(VisitaSaveDTO::class.java, Visita::class.java)
-//      .addMappings(object :
-//        PropertyMap<VisitaSaveDTO, Visita>() {
-//        override fun configure() {
-//          skip(destination.data)
-//        }
-//      })
 
     mapper.addConverter(stringToLocalDateTimeConverter())
     mapper.addConverter(localDateTimeToStringConverter())
@@ -44,9 +32,9 @@ class ModelMapperConfig {
     return mapper
   }
 
-  private fun localDateTimeToStringConverter(): AbstractConverter<LocalDate, String> {
-    return object : AbstractConverter<LocalDate, String>() {
-      override fun convert(src: LocalDate?): String? {
+  private fun localDateTimeToStringConverter(): AbstractConverter<LocalDateTime, String> {
+    return object : AbstractConverter<LocalDateTime, String>() {
+      override fun convert(src: LocalDateTime?): String? {
         try {
           if (src == null)
             return null
@@ -59,14 +47,14 @@ class ModelMapperConfig {
     }
   }
 
-  private fun stringToLocalDateTimeConverter(): AbstractConverter<String, LocalDate> {
-    return object : AbstractConverter<String, LocalDate>() {
-      override fun convert(src: String?): LocalDate? {
+  private fun stringToLocalDateTimeConverter(): AbstractConverter<String, LocalDateTime> {
+    return object : AbstractConverter<String, LocalDateTime>() {
+      override fun convert(src: String?): LocalDateTime? {
         try {
           if (src == null) {
             return null
           }
-          return LocalDate.parse(src, diaMesAnoHoraMinFormatter)
+          return LocalDateTime.parse(src, diaMesAnoHoraMinFormatter)
         } catch (e: DateTimeParseException) {
           println(e.message)
           return null
