@@ -30,7 +30,7 @@ class EmailService(
   private val logger = KotlinLogging.logger { }
 
   private fun createQRCode(visita: VisitaDTO): File {
-    return QRCode.from(visita.visitante.nome)
+    return QRCode.from(visita.toString())
       .to(ImageType.JPG)
       .withCharset("UTF-8")
       .withSize(400, 400)
@@ -126,7 +126,7 @@ class EmailService(
     )
     val professor = ProfessorDTO(null, properties["professor"]!!, from)
 
-    val data = properties["data"]!!.split("")
+    val data = properties["data"]!!.trim()
 
     logger.info { "data: $data" }
 
