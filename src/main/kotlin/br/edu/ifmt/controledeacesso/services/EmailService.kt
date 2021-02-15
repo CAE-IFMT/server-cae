@@ -126,10 +126,12 @@ class EmailService(
     )
     val professor = ProfessorDTO(null, properties["professor"]!!, from)
 
-    val data: String = properties["data"]!!.toString()
+    val data = properties["data"]!!.split("")
+
+    logger.info { "data: $data" }
 
     return VisitaSaveDTO(
-      data,
+      "12/02/2021",
       properties["motivo"]!!,
       professor,
       visitante
