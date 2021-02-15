@@ -18,7 +18,7 @@ import java.time.format.DateTimeParseException
 @Configuration
 class ModelMapperConfig {
 
-  private var diaMesAnoHoraMinFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+  private var diaMesAnoHoraMinFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
 
 
   @Bean
