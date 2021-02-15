@@ -8,8 +8,10 @@ import mu.KotlinLogging
 import net.glxn.qrgen.core.image.ImageType
 import net.glxn.qrgen.javase.QRCode
 import net.sargue.mailgun.MailBuilder
+import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 import java.io.File
+import java.time.LocalDateTime
 
 
 /**
@@ -24,6 +26,7 @@ class EmailService(
   private val visitaService: VisitaService,
   private val parserService: EmailParserService,
   private val mailBuilder: MailBuilder,
+  private val mapper: ModelMapper
 ) {
   private val logger = KotlinLogging.logger { }
 
@@ -56,12 +59,15 @@ class EmailService(
   private fun sendEmailToProfessor(from: String, visita: VisitaDTO) {
     val email = this.parserService.extractEmail(from)
     logger.info { "Enviando email para $email" }
+
+    val dateFormatted = mapper.map(visita.data, LocalDateTime::class.java)
+
     val response = mailBuilder
       .to(email)
       .subject("Permissão de entrada no IFMT")
       .text(
         "Permissão de entrada para o Instituto Federal de Mato Grosso agendada " +
-            "para ${visita.visitante.nome} por ${visita.professor.nome} no dia ${visita.data}."
+            "para ${visita.visitante.nome} por ${visita.professor.nome} no dia ${dateFormatted}."
       )
       .build()
       .send()
