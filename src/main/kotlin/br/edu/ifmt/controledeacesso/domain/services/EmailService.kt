@@ -32,7 +32,7 @@ class EmailService(
     return QRCode.from(visita.toJson())
       .to(ImageType.JPG)
       .withCharset("UTF-8")
-      .withSize(250, 250)
+      .withSize(300, 300)
       .file()
   }
 
