@@ -22,7 +22,7 @@ class EmailParserService {
     val map = mutableMapOf<String, String>()
 
     values.forEach {
-      map[it[0]] = it[1]
+      map[it[0]] = it[1].trim()
     }
     return map
   }
