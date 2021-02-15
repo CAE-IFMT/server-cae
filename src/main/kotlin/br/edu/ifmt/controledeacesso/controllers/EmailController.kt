@@ -1,6 +1,6 @@
 package br.edu.ifmt.controledeacesso.controllers
 
-import br.edu.ifmt.controledeacesso.services.EmailService
+import br.edu.ifmt.controledeacesso.domain.services.EmailService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping

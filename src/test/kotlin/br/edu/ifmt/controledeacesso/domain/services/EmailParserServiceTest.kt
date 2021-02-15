@@ -1,7 +1,7 @@
-package br.edu.ifmt.controledeacesso.services
+package br.edu.ifmt.controledeacesso.domain.services
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
@@ -12,13 +12,13 @@ import org.springframework.boot.test.context.SpringBootTest
  * @version 1.0.0
  */
 @SpringBootTest
-class EmailServiceTest {
+class EmailParserServiceTest{
 
   @Autowired
-  private lateinit var service: EmailService
+  lateinit var parserService: EmailParserService
 
   @Test
-  fun createVisitaTest() {
+  fun parserBodyTest() {
 
     val body = """
       professor=Gabriel José Curvo Honda
@@ -32,9 +32,12 @@ class EmailServiceTest {
       
     """.trimIndent()
 
-    assertDoesNotThrow {
-      service.createVisita("gabriel@gmail.com", "319851398319", body)
-    }
-  }
+    val map = parserService.parseBody(body)
 
+    assertEquals("Gabriel José Curvo Honda", map["professor"])
+    assertEquals("Carlos Henrique", map["visitante"])
+    assertEquals("carlos@email.com", map["email_visitante"])
+    assertEquals("000.000.000-10", map["cpf"])
+    assertEquals("descreva aqui, de maneira sucinta, o motivo da visita", map["motivo"])
+  }
 }

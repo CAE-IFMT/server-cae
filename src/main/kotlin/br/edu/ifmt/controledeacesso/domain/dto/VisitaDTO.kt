@@ -1,11 +1,11 @@
-package br.edu.ifmt.controledeacesso.models.dto
+package br.edu.ifmt.controledeacesso.domain.dto
 
 import br.edu.ifmt.controledeacesso.config.NoArg
 import java.time.LocalDateTime
 
 /**
  * Representa uma abstração pública da entidade Visita <br>
- * @see br.edu.ifmt.controledeacesso.models.entities.Visita
+ * @see br.edu.ifmt.controledeacesso.domain.entities.Visita
  *
  * @project cae-api
  * @author daohn on 06/02/2021
