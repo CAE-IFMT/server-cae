@@ -1,10 +1,7 @@
 package br.edu.ifmt.controledeacesso.config
 
-import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
-import br.edu.ifmt.controledeacesso.models.entities.Visita
 import org.modelmapper.AbstractConverter
 import org.modelmapper.ModelMapper
-import org.modelmapper.PropertyMap
 import org.modelmapper.convention.MatchingStrategies
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -32,14 +29,14 @@ class ModelMapperConfig {
      * Corrige bug da concatenação de String VisitaSaveDTO.data -> Visita.data
      * https://stackoverflow.com/questions/37698527/how-to-skip-a-field-during-map-stage
      */
-    mapper
-      .typeMap(VisitaSaveDTO::class.java, Visita::class.java)
-      .addMappings(object :
-        PropertyMap<VisitaSaveDTO, Visita>() {
-        override fun configure() {
-          skip(destination.data)
-        }
-      })
+//    mapper
+//      .typeMap(VisitaSaveDTO::class.java, Visita::class.java)
+//      .addMappings(object :
+//        PropertyMap<VisitaSaveDTO, Visita>() {
+//        override fun configure() {
+//          skip(destination.data)
+//        }
+//      })
 
     mapper.addConverter(stringToLocalDateTimeConverter())
     mapper.addConverter(localDateTimeToStringConverter())

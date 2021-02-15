@@ -129,7 +129,7 @@ class EmailService(
     val data = properties["data"]!!.trim()
 
     logger.info { "data: $data" }
-    logger.info { "data: ${data.split("")}" }
+    logger.info { "data: ${data.trim().split("")}" }
 
     return VisitaSaveDTO(
       data,
