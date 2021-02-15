@@ -129,9 +129,10 @@ class EmailService(
     val data = properties["data"]!!.trim()
 
     logger.info { "data: $data" }
+    logger.info { "data: ${data.split("")}" }
 
     return VisitaSaveDTO(
-      "12/02/2021",
+      data,
       properties["motivo"]!!,
       professor,
       visitante
