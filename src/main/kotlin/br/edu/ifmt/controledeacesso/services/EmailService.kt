@@ -1,9 +1,6 @@
 package br.edu.ifmt.controledeacesso.services
 
-import br.edu.ifmt.controledeacesso.models.dto.ProfessorDTO
 import br.edu.ifmt.controledeacesso.models.dto.VisitaDTO
-import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
-import br.edu.ifmt.controledeacesso.models.dto.VisitanteDTO
 import mu.KotlinLogging
 import net.glxn.qrgen.core.image.ImageType
 import net.glxn.qrgen.javase.QRCode
@@ -41,7 +38,7 @@ class EmailService(
 
   fun createVisita(from: String, subject: String, body: String) {
     try {
-      val dto = this.buildDTO(body, from)
+      val dto = this.parserService.buildDTO(body, from)
 
       logger.info { "DTO criado com sucesso" }
 
@@ -63,7 +60,7 @@ class EmailService(
 
     val dateFormatted = mapper.map(visita.data, String::class.java)
 
-    val response = mailBuilder()
+    mailBuilder()
       .to(email)
       .subject("Permissão de entrada no IFMT")
       .text(
@@ -72,7 +69,7 @@ class EmailService(
       )
       .build()
       .send()
-    logger.info { "Email enviado ${response.responseCode()}" }
+    logger.info { "Email enviado com sucesso!" }
   }
 
   private fun sendEmailToVisitante(visita: VisitaDTO) {
@@ -80,7 +77,7 @@ class EmailService(
 
     logger.info { "Email enviado para ${visita.visitante.email}" }
 
-    val response = mailBuilder()
+    mailBuilder()
       .to(visita.visitante.email)
       .subject("QRCode para entrada no IFMT")
       .text("Permissão de entrada para o Instituto Federal de Mato Grosso")
@@ -88,26 +85,7 @@ class EmailService(
       .attachment(qrCode)
       .build()
       .send()
-    logger.info { "Email enviado ${response.responseCode()}" }
-  }
-
-  private fun buildDTO(body: String, from: String): VisitaSaveDTO {
-    val properties = parserService.parseBody(body)
-
-    val visitante = VisitanteDTO(
-      null,
-      properties["visitante"]!!,
-      properties["email_visitante"]!!,
-      properties["cpf"]!!
-    )
-    val professor = ProfessorDTO(null, properties["professor"]!!, from)
-
-    return VisitaSaveDTO(
-      properties["data"]!!,
-      properties["motivo"]!!,
-      professor,
-      visitante
-    )
+    logger.info { "Email enviado com sucesso!" }
   }
 
   private fun mailBuilder(): MailBuilder {
