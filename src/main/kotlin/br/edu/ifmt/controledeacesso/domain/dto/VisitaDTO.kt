@@ -2,7 +2,6 @@ package br.edu.ifmt.controledeacesso.domain.dto
 
 import br.edu.ifmt.controledeacesso.config.NoArg
 import com.fasterxml.jackson.databind.ObjectMapper
-import java.time.LocalDateTime
 
 /**
  * Representa uma abstração pública da entidade Visita <br>
@@ -14,7 +13,7 @@ import java.time.LocalDateTime
 @NoArg
 data class VisitaDTO(
   var id: Long,
-  var data: LocalDateTime,
+  var data: String,
   var motivo: String,
   var ocorrido: Boolean,
   var professor: ProfessorDTO,
