@@ -10,8 +10,6 @@ import net.glxn.qrgen.javase.QRCode
 import net.sargue.mailgun.MailBuilder
 import org.springframework.stereotype.Service
 import java.io.File
-import java.util.regex.Pattern
-import java.util.stream.Collectors
 
 
 /**
@@ -41,11 +39,11 @@ class EmailService(
     try {
       val dto = this.buildDTO(body, from)
 
-      logger.info { "Criado DTO: $dto" }
+      logger.info { "DTO criado com sucesso" }
 
       val visita = visitaService.save(dto)
 
-      logger.info { "Visita persistida com sucesso: $visita" }
+      logger.info { "Visita persistida com sucesso" }
 
       sendEmailToProfessor(from, visita)
       sendEmailToVisitante(visita)
@@ -56,7 +54,7 @@ class EmailService(
   }
 
   private fun sendEmailToProfessor(from: String, visita: VisitaDTO) {
-    val email = this.extractEmail(from)
+    val email = this.parserService.extractEmail(from)
     logger.info { "Enviando email para $email" }
     val response = mailBuilder
       .to(email)
@@ -67,7 +65,7 @@ class EmailService(
       )
       .build()
       .send()
-    logger.info { "Email enviado ${response.isOk}" }
+    logger.info { "Email enviado ${response.responseCode()}" }
   }
 
   private fun sendEmailToVisitante(visita: VisitaDTO) {
@@ -83,17 +81,7 @@ class EmailService(
       .attachment(qrCode)
       .build()
       .send()
-    logger.info { "Email enviado ${response.isOk}" }
-  }
-
-  private fun extractEmail(from: String): String {
-    val split = Pattern.compile("[<>]")
-      .splitAsStream(from)
-      .collect(Collectors.toList())
-    val email = split[1]
-    if (!email.contains("@"))
-      throw IllegalStateException("Não será possível enviar notificação por email $email")
-    return email
+    logger.info { "Email enviado ${response.responseCode()}" }
   }
 
   private fun buildDTO(body: String, from: String): VisitaSaveDTO {
