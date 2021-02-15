@@ -30,7 +30,7 @@ class EmailService(
   private val logger = KotlinLogging.logger { }
 
   private fun createQRCode(visita: VisitaDTO): File {
-    return QRCode.from(visita.toString())
+    return QRCode.from(visita.id.toString())
       .to(ImageType.JPG)
       .withCharset("UTF-8")
       .withSize(400, 400)
@@ -67,7 +67,7 @@ class EmailService(
       )
       .build()
       .send()
-    logger.info { "Email enviado ${response.responseMessage()}" }
+    logger.info { "Email enviado ${response.isOk}" }
   }
 
   private fun sendEmailToVisitante(visita: VisitaDTO) {
@@ -83,7 +83,7 @@ class EmailService(
       .attachment(qrCode)
       .build()
       .send()
-    logger.info { "Email enviado ${response.responseMessage()}" }
+    logger.info { "Email enviado ${response.isOk}" }
   }
 
   private fun extractEmail(from: String): String {
