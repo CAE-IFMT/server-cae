@@ -1,5 +1,6 @@
 package br.edu.ifmt.controledeacesso.services
 
+import br.edu.ifmt.controledeacesso.exceptions.ObjectNotFoundException
 import br.edu.ifmt.controledeacesso.models.dto.VisitaDTO
 import br.edu.ifmt.controledeacesso.models.dto.VisitaSaveDTO
 import br.edu.ifmt.controledeacesso.models.entities.Professor
@@ -36,6 +37,12 @@ class VisitaService(
     return modelMapper.map(visita, VisitaDTO::class.java)
   }
 
+  fun findById(id: Long): VisitaDTO = repository
+    .findById(id)
+    .map { buildDTO(it) }
+    .orElseThrow { ObjectNotFoundException("Visita não encontrada") }
+
+
   private fun parseDTO(dto: VisitaSaveDTO): Visita {
     val visita = modelMapper.map(dto, Visita::class.java)
       ?: throw IllegalStateException("Algo deu errado durante a construção da Visita")
@@ -52,11 +59,10 @@ class VisitaService(
       dto.visitante.cpf
     )
 
-    if(visitanteConsulta.isPresent) {
+    if (visitanteConsulta.isPresent) {
       val visitante = visitanteConsulta.get()
       visitante.adicionaVisita(visita)
-    }
-    else {
+    } else {
       val obj = visitanteRepository.save(modelMapper.map(dto.visitante, Visitante::class.java))
       obj.adicionaVisita(visita)
     }

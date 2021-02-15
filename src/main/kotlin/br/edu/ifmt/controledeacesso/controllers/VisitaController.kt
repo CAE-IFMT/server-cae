@@ -31,7 +31,13 @@ class VisitaController(private val service: VisitaService) {
     @RequestBody dto: VisitaSaveDTO,
     uriComponentsBuilder: UriComponentsBuilder,
   ): ResponseEntity<VisitaDTO> {
-    val visita =  service.save(dto)
+    val visita = service.save(dto)
+    return ResponseEntity.ok(visita)
+  }
+
+  @GetMapping("/{id}")
+  fun findById(@PathVariable("id") id: Long): ResponseEntity<VisitaDTO> {
+    val visita = service.findById(id)
     return ResponseEntity.ok(visita)
   }
 }
