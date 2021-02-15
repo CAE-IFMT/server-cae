@@ -1,12 +1,10 @@
 package br.edu.ifmt.controledeacesso.config
 
-import net.sargue.mailgun.Mail
-import net.sargue.mailgun.MailBuilder
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.PropertySource
-import net.sargue.mailgun.Configuration as MailGunConfig
+import net.sargue.mailgun.Configuration as MailConfiguration
 
 /**
  * Define beans e configurações relacionadas ao MailGun
@@ -21,17 +19,16 @@ import net.sargue.mailgun.Configuration as MailGunConfig
 class MailGunConfig {
   @Value("\${mailgun.api.domain}")
   lateinit var apiDomain: String
-    @Bean get
+    @Bean("apiDomain") get
 
   @Value("\${mailgun.api.key}")
   lateinit var apiKey: String
-    @Bean get
+    @Bean("apiKey") get
 
   @Bean
-  fun mailBuilder(): MailBuilder = Mail.using(
-    MailGunConfig()
+  fun mailBuilder(): MailConfiguration =
+    MailConfiguration()
       .domain(apiDomain)
       .apiKey(apiKey)
       .from("Suporte CAE-IFMT", "suporte@$apiDomain")
-  )
 }
