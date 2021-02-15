@@ -11,7 +11,7 @@ import br.edu.ifmt.controledeacesso.repositories.VisitanteRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Configuration
 import org.springframework.test.context.ActiveProfiles
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 /**
  * @project cae-api
@@ -40,27 +40,27 @@ class DatabaseConfig(
     visitanteRepository.saveAll(listOf(v1, v2, v3))
 
     val visita1 = Visita(
-      null, LocalDate.now().plusDays(10),
+      null, LocalDateTime.now().plusDays(10),
       "Buscar livro", false, p1, v1
     )
     val visita2 = Visita(
-      null, LocalDate.now().minusDays(5),
+      null, LocalDateTime.now().minusDays(5),
       "Atualizar documentos", true, p2, v2
     )
     val visita3 = Visita(
-      null, LocalDate.now().minusDays(1), "Devolver livro",
+      null, LocalDateTime.now().minusDays(1), "Devolver livro",
       false, p3, v3
     )
     val visita4 = Visita(
-      null, LocalDate.now(), "Devolver livro",
+      null, LocalDateTime.now(), "Devolver livro",
       false, p1, v2
     )
     val visita5 = Visita(
-      null, LocalDate.now(), "Devolver livro",
+      null, LocalDateTime.now(), "Devolver livro",
       false, p2, v3
     )
     val visita6 = Visita(
-      null, LocalDate.now().plusDays(1), "Devolver livro",
+      null, LocalDateTime.now().plusDays(1), "Devolver livro",
       false, p2, v1
     )
 
