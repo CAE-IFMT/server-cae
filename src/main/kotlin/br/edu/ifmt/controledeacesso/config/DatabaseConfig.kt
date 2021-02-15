@@ -10,7 +10,7 @@ import br.edu.ifmt.controledeacesso.repositories.VisitaRepository
 import br.edu.ifmt.controledeacesso.repositories.VisitanteRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Configuration
-import org.springframework.test.context.ActiveProfiles
+import org.springframework.context.annotation.Profile
 import java.time.LocalDateTime
 
 /**
@@ -18,7 +18,7 @@ import java.time.LocalDateTime
  * @author daohn on 06/02/2021
  */
 @Configuration
-@ActiveProfiles(profiles = ["docker", "localhost"])
+@Profile("docker", "localhost")
 class DatabaseConfig(
   private val professorRepository: ProfessorRepository,
   private val usuarioRepository: UsuarioRepository,
