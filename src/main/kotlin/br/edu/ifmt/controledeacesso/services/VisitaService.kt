@@ -41,7 +41,6 @@ class VisitaService(
       ?: throw IllegalStateException("Algo deu errado durante a construção da Visita")
     addProfessor(visita, dto)
     addVisitante(visita, dto)
-//    visita.data = LocalDate.parse(dto.data, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
     return visita
   }
 
