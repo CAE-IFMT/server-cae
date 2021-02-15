@@ -11,7 +11,6 @@ import net.sargue.mailgun.MailBuilder
 import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 import java.io.File
-import java.time.LocalDateTime
 
 
 /**
@@ -60,7 +59,7 @@ class EmailService(
     val email = this.parserService.extractEmail(from)
     logger.info { "Enviando email para $email" }
 
-    val dateFormatted = mapper.map(visita.data, LocalDateTime::class.java)
+    val dateFormatted = mapper.map(visita.data, String::class.java)
 
     val response = mailBuilder
       .to(email)
