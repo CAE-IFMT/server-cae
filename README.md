@@ -3,7 +3,7 @@
 * A API estará disponível no Heroku.
 
 ## Exemplo de cadastro de visita
-![email](images/email-form.jpeg)
+![email](images/email-form-new.png)
 
 ## Tecnologias
 
