@@ -7,6 +7,8 @@ import br.edu.ifmt.controledeacesso.models.dto.VisitanteDTO
 import mu.KotlinLogging
 import net.glxn.qrgen.core.image.ImageType
 import net.glxn.qrgen.javase.QRCode
+import net.sargue.mailgun.Configuration
+import net.sargue.mailgun.Mail
 import net.sargue.mailgun.MailBuilder
 import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
@@ -24,7 +26,7 @@ import java.io.File
 class EmailService(
   private val visitaService: VisitaService,
   private val parserService: EmailParserService,
-  private val mailBuilder: MailBuilder,
+  private val mailConfiguration: Configuration,
   private val mapper: ModelMapper
 ) {
   private val logger = KotlinLogging.logger { }
@@ -61,7 +63,7 @@ class EmailService(
 
     val dateFormatted = mapper.map(visita.data, String::class.java)
 
-    val response = mailBuilder
+    val response = mailBuilder()
       .to(email)
       .subject("Permissão de entrada no IFMT")
       .text(
@@ -78,7 +80,7 @@ class EmailService(
 
     logger.info { "Email enviado para ${visita.visitante.email}" }
 
-    val response = mailBuilder
+    val response = mailBuilder()
       .to(visita.visitante.email)
       .subject("QRCode para entrada no IFMT")
       .text("Permissão de entrada para o Instituto Federal de Mato Grosso")
@@ -106,5 +108,9 @@ class EmailService(
       professor,
       visitante
     )
+  }
+
+  private fun mailBuilder(): MailBuilder {
+    return Mail.using(mailConfiguration)
   }
 }
