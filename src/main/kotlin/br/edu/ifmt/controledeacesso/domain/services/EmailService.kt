@@ -29,10 +29,10 @@ class EmailService(
   private val logger = KotlinLogging.logger { }
 
   private fun createQRCode(visita: VisitaDTO): File {
-    return QRCode.from(visita.id.toString())
+    return QRCode.from(visita.toJson())
       .to(ImageType.JPG)
       .withCharset("UTF-8")
-      .withSize(250, 250)
+      .withSize(400, 400)
       .file()
   }
 

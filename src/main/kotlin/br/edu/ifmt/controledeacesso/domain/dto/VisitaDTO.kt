@@ -1,6 +1,7 @@
 package br.edu.ifmt.controledeacesso.domain.dto
 
 import br.edu.ifmt.controledeacesso.config.NoArg
+import com.fasterxml.jackson.databind.ObjectMapper
 import java.time.LocalDateTime
 
 /**
@@ -18,4 +19,6 @@ data class VisitaDTO(
   var ocorrido: Boolean,
   var professor: ProfessorDTO,
   var visitante: VisitanteDTO,
-)
+) {
+  fun toJson(): String = ObjectMapper().writeValueAsString(this)
+}
