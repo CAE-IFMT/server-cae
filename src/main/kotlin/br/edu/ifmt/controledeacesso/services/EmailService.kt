@@ -37,19 +37,6 @@ class EmailService(
       .file()
   }
 
-//  private fun sendEmail(email: String) {
-//    val qrcode = createQRCode()
-//
-//    builder
-//      .to(email)
-//      .subject("QRCode de autenticação")
-//      .text("Permissão de entrada para o Instituto Federal de Mato Grosso")
-//      .multipart()
-//      .attachment(qrcode)
-//      .build()
-//      .send()
-//  }
-
   fun createVisita(from: String, subject: String, body: String) {
     try {
       val dto = this.buildDTO(body, from)
@@ -99,12 +86,6 @@ class EmailService(
     logger.info { "Email enviado ${response.responseMessage()}" }
   }
 
-//  private fun writeEmail(email: String, subject: String, text: String): MailBuilder {
-//    return builder.to(email)
-//      .subject(subject)
-//      .text(text)
-//  }
-
   private fun extractEmail(from: String): String {
     val split = Pattern.compile("[<>]")
       .splitAsStream(from)
@@ -126,13 +107,8 @@ class EmailService(
     )
     val professor = ProfessorDTO(null, properties["professor"]!!, from)
 
-    val data = properties["data"]!!.trim()
-
-    logger.info { "data: $data" }
-    logger.info { "data: ${data.trim().split("")}" }
-
     return VisitaSaveDTO(
-      data,
+      properties["data"]!!,
       properties["motivo"]!!,
       professor,
       visitante
