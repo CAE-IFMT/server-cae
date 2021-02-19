@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
  * @since 19/02/2021
  * @version 1.0.0
  */
-@Service("UserDetailsService")
+@Service("usuarioService")
 class UsuarioService(val repository: UsuarioRepository) : UserDetailsService {
 
   @Throws(UsernameNotFoundException::class)
