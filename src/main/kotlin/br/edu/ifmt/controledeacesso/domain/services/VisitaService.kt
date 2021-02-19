@@ -88,4 +88,24 @@ class VisitaService(
     return modelMapper.map(visita, VisitaDTO::class.java)
   }
 
+  fun updateVisitaOcorridaStatus(id: Long?): VisitaDTO? {
+    if(id == null) throw IllegalStateException("Não foi possível atualizar a visita")
+
+    val visitaOptional = repository.findById(id)
+
+    if(!visitaOptional.isPresent)
+      throw ObjectNotFoundException("Não foi possível encontrar a visita")
+
+    val visita = visitaOptional.get()
+
+    visita.apply {
+      this.ocorrido = true
+    }
+
+    repository.save(visita)
+
+    return buildDTO(visita)
+
+  }
+
 }

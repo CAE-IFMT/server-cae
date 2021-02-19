@@ -40,4 +40,10 @@ class VisitaController(private val service: VisitaService) {
     val visita = service.findById(id)
     return ResponseEntity.ok(visita)
   }
+
+  @PutMapping("/ocorrido/{id}")
+  fun updateVisitaOcorridaStatus(@PathVariable("id") id: Long) : ResponseEntity<VisitaDTO> {
+    val pessoaUpdated = service.updateVisitaOcorridaStatus(id)
+    return ResponseEntity.ok(pessoaUpdated)
+  }
 }
