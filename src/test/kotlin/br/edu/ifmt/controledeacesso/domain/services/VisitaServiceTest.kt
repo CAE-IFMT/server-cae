@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import java.time.format.DateTimeFormatter
 
 /**
  * Created by daohn on 10/02/2021
@@ -23,7 +22,6 @@ class VisitaServiceTest {
 
   @Test
   fun saveTest() {
-    val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
     val visitaSave = VisitaSaveDTO(
       "11/02/2020",
       "motivo aqui",
@@ -36,7 +34,7 @@ class VisitaServiceTest {
     println(visita)
 
     assertEquals(visitaSave.professor.nome, visita.professor.nome)
-    assertEquals(visitaSave.data, formatter.format(visita.data))
+    assertEquals(visitaSave.data, visita.data)
     assertEquals(visitaSave.visitante.nome, visita.visitante.nome)
     assertEquals(visitaSave.motivo, visita.motivo)
   }

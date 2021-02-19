@@ -1,4 +1,4 @@
-package br.edu.ifmt.controledeacesso.api
+package br.edu.ifmt.controledeacesso.api.controllers
 
 import br.edu.ifmt.controledeacesso.domain.services.EmailService
 import org.springframework.http.ResponseEntity
