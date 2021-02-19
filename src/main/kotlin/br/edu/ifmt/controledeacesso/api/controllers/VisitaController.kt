@@ -1,4 +1,4 @@
-package br.edu.ifmt.controledeacesso.api
+package br.edu.ifmt.controledeacesso.api.controllers
 
 import br.edu.ifmt.controledeacesso.domain.dto.VisitaDTO
 import br.edu.ifmt.controledeacesso.domain.dto.VisitaSaveDTO
