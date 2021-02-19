@@ -18,15 +18,13 @@ data class Usuario(
   var login: String,
   var nome: String,
   var senha: String,
-  @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(
-    name = "usuario_perfil",
-    joinColumns = [JoinColumn(name = "usuario_id", referencedColumnName = "id")],
-    inverseJoinColumns = [JoinColumn(name = "perfil_id", referencedColumnName = "id")]
-  )
-  val perfis: List<Perfil>
+
+  @ElementCollection(fetch = FetchType.EAGER)
+  @CollectionTable(name="perfis")
+  @Enumerated(value = EnumType.STRING)
+  val perfis: Set<Perfil>
 ) : UserDetails {
-  override fun getAuthorities(): List<Perfil> = this.perfis
+  override fun getAuthorities(): Set<Perfil> = this.perfis
   override fun getPassword(): String = this.senha
   override fun getUsername(): String = this.login
   override fun isAccountNonExpired(): Boolean = true
