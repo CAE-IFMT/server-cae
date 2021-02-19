@@ -1,9 +1,6 @@
 package br.edu.ifmt.controledeacesso.config
 
-import br.edu.ifmt.controledeacesso.domain.entities.Professor
-import br.edu.ifmt.controledeacesso.domain.entities.Usuario
-import br.edu.ifmt.controledeacesso.domain.entities.Visita
-import br.edu.ifmt.controledeacesso.domain.entities.Visitante
+import br.edu.ifmt.controledeacesso.domain.entities.*
 import br.edu.ifmt.controledeacesso.domain.repositories.ProfessorRepository
 import br.edu.ifmt.controledeacesso.domain.repositories.UsuarioRepository
 import br.edu.ifmt.controledeacesso.domain.repositories.VisitaRepository
@@ -11,6 +8,7 @@ import br.edu.ifmt.controledeacesso.domain.repositories.VisitanteRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.time.LocalDate
 
 /**
@@ -20,6 +18,7 @@ import java.time.LocalDate
 @Configuration
 @Profile("docker", "localhost")
 class DatabaseConfig(
+  private val encoder: BCryptPasswordEncoder,
   private val professorRepository: ProfessorRepository,
   private val usuarioRepository: UsuarioRepository,
   private val visitanteRepository: VisitanteRepository,
@@ -66,9 +65,27 @@ class DatabaseConfig(
 
     visitaRepository.saveAll(listOf(visita1, visita2, visita3, visita4, visita5, visita6))
 
-    val u1 = Usuario(null, "admin", "admin", "admin")
-    val u2 = Usuario(null, "recepcionista", "recepcionista", "recepcionista")
-    val u3 = Usuario(null, "usuario", "usuario", "usuario")
+    val u1 = Usuario(
+      null,
+      "admin",
+      "admin",
+      encoder.encode("admin"),
+      setOf(Perfil.ADMIN)
+    )
+    val u2 = Usuario(
+      null,
+      "recepcionista",
+      "recepcionista",
+      encoder.encode("recepcionista"),
+      setOf(Perfil.RECEPCIONISTA)
+    )
+    val u3 = Usuario(
+      null,
+      "usuario",
+      "usuario",
+      encoder.encode("usuario"),
+      setOf(Perfil.USUARIO)
+    )
 
     usuarioRepository.saveAll(listOf(u1, u2, u3))
   }
