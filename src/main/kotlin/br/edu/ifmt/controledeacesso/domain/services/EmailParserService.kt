@@ -51,6 +51,7 @@ class EmailParserService {
   }
 
   fun extractEmail(from: String): String {
+    // fixme: Implementar parser para email do professor
     val split = Pattern.compile("[<>]")
       .splitAsStream(from)
       .collect(Collectors.toList())
