@@ -19,9 +19,16 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  */
 @RestControllerAdvice
 class ExceptionHandler : ResponseEntityExceptionHandler() {
-  @ExceptionHandler(EmptyResultDataAccessException::class)
-  fun errorNotFound(exception: Exception): ResponseEntity<Any> {
-    return ResponseEntity.notFound().build()
+  @ExceptionHandler(EmptyResultDataAccessException::class, ObjectNotFoundException::class)
+  fun errorNotFound(exception: Exception, request: WebRequest): ResponseEntity<Any> {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+      DefaultErrorMessage(
+        status = HttpStatus.FORBIDDEN.value(),
+        error = HttpStatus.NOT_FOUND.name,
+        message = exception.message ?: "Objeto não encontrado",
+        path = (request as ServletWebRequest).request.requestURI
+      )
+    )
   }
 
   @ExceptionHandler(IllegalArgumentException::class, IllegalStateException::class)
