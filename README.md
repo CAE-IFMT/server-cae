@@ -16,11 +16,11 @@
 | Postgres      | definida pelo spring | 
 | H2            | definida pelo spring |
 
-
 ## Funcionalidades
 
-| Descrição                               | Método | URI      |
-|-----------------------------------------|--------|----------|
-| Cria permissão ao enviar email          | POST   | /email |
-| Realiza login                           | POST   | /login   |
-| Consulta lista de permissões de entrada | GET    | /visitas |
+| Descrição                                               | Método | URI                    |
+|---------------------------------------------------------|--------|------------------------|
+| Cria permissão ao enviar email                          | POST   | /email                 |
+| Realiza login                                           | POST   | /login                 |
+| Consulta lista de permissões de entrada                 | GET    | /visitas               |
+| Atualiza o status da visita para ocorrido através do id | PUT    | /visitas/ocorrido/{id} |
