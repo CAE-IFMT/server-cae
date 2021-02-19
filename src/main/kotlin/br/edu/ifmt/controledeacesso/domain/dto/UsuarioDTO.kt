@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 data class UsuarioDTO(
   var login: String,
   var nome: String,
-  var email: String,
   var token: String?,
 ) {
   fun toJson(): String = ObjectMapper().writeValueAsString(this)
