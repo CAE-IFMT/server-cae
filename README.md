@@ -23,4 +23,4 @@
 | Cria permissão ao enviar email                          | POST   | /email                 |
 | Realiza login                                           | POST   | /login                 |
 | Consulta lista de permissões de entrada                 | GET    | /visitas               |
-| Atualiza o status da visita para ocorrido através do id | PUT    | /visitas/ocorrido/{id} |
+| Atualiza o status da visita para ocorrido através do id | PUT    | /visitas/{id}/ocorrido |
