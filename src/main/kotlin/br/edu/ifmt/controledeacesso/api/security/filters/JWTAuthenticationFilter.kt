@@ -43,10 +43,10 @@ class JWTAuthenticationFilter(
   ): Authentication {
     val login = ObjectMapper().readValue(request?.inputStream, UsuarioCredenciaisDTO::class.java)
 
-    if (StringUtils.isEmpty(login.username) || StringUtils.isEmpty(login.password))
+    if (StringUtils.isEmpty(login.login) || StringUtils.isEmpty(login.senha))
       throw BadCredentialsException("Invalid username/password")
 
-    val authentication = UsernamePasswordAuthenticationToken(login.username, login.password)
+    val authentication = UsernamePasswordAuthenticationToken(login.login, login.senha)
     return authenticationManager.authenticate(authentication)
   }
 

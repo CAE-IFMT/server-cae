@@ -10,6 +10,6 @@ import br.edu.ifmt.controledeacesso.config.NoArg
  */
 @NoArg
 data class UsuarioCredenciaisDTO(
-  val username: String,
-  val password: String,
+  val login: String,
+  val senha: String,
 )
