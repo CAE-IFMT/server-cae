@@ -63,6 +63,10 @@ class DatabaseService(
 
     visitaRepository.saveAll(listOf(visita1, visita2, visita3, visita4, visita5, visita6))
 
+    createUsuarios()
+  }
+
+  fun createUsuarios() {
     val u1 = Usuario(
       null,
       "admin",

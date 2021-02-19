@@ -14,7 +14,7 @@ import org.springframework.context.annotation.PropertySource
 @Configuration
 @Profile("docker", "localhost")
 @PropertySource("classpath:application.properties")
-class DatabaseConfig(
+class LocalDatabaseConfig(
   private val service: DatabaseService,
 ) {
 
