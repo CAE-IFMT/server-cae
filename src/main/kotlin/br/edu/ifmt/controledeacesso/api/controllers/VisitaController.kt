@@ -45,7 +45,7 @@ class VisitaController(private val service: VisitaService) {
     return ResponseEntity.ok(visita)
   }
 
-  @PutMapping("/ocorrido/{id}")
+  @PutMapping("/{id}/ocorrido")
   @Secured("ROLE_RECEPCIONISTA")
   fun updateVisitaOcorridaStatus(@PathVariable("id") id: Long) : ResponseEntity<VisitaDTO> {
     val pessoaUpdated = service.updateVisitaOcorridaStatus(id)
