@@ -24,3 +24,5 @@
 | Realiza login                                           | POST   | /login                 |
 | Consulta lista de permissões de entrada                 | GET    | /visitas               |
 | Atualiza o status da visita para ocorrido através do id | PUT    | /visitas/{id}/ocorrido |
+| Consulta lista de visitas que ocorreram                 | GET    | /visitas/ocorridas     |
+| Consulta lista de visitas que não ocorreram             | GET    | /visitas/naoOcorridas  |
