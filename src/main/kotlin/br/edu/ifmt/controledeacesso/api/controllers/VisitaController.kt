@@ -45,10 +45,24 @@ class VisitaController(private val service: VisitaService) {
     return ResponseEntity.ok(visita)
   }
 
-  @PutMapping("/{id}/ocorrido")
+  @PutMapping("/{id}/ocorrida")
   @Secured("ROLE_RECEPCIONISTA")
   fun updateVisitaOcorridaStatus(@PathVariable("id") id: Long) : ResponseEntity<VisitaDTO> {
     val pessoaUpdated = service.updateVisitaOcorridaStatus(id)
     return ResponseEntity.ok(pessoaUpdated)
+  }
+
+  @GetMapping("/ocorridas")
+  @Secured("ROLE_RECEPCIONISTA")
+  fun findByVisitasOcorridas() : ResponseEntity<List<VisitaDTO>> {
+    val visitas = service.findByVisitasOcorridas()
+    return ResponseEntity.ok(visitas)
+  }
+
+  @GetMapping("/naoOcorridas")
+  @Secured("ROLE_RECEPCIONISTA")
+  fun findByVisitasNaoOcorridas() : ResponseEntity<List<VisitaDTO>> {
+    val visitas = service.findByVisitasNaoOcorridas()
+    return ResponseEntity.ok(visitas)
   }
 }

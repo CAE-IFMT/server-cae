@@ -89,11 +89,11 @@ class VisitaService(
   }
 
   fun updateVisitaOcorridaStatus(id: Long?): VisitaDTO? {
-    if(id == null) throw IllegalStateException("Não foi possível atualizar a visita")
+    if (id == null) throw IllegalStateException("Não foi possível atualizar a visita")
 
     val visitaOptional = repository.findById(id)
 
-    if(!visitaOptional.isPresent)
+    if (!visitaOptional.isPresent)
       throw ObjectNotFoundException("Não foi possível encontrar a visita")
 
     val visita = visitaOptional.get()
@@ -107,5 +107,17 @@ class VisitaService(
     return buildDTO(visita)
 
   }
+
+  fun findByVisitasOcorridas(): List<VisitaDTO> =
+    repository
+      .filterByVisitaOcorrida(true)
+      .map(this::buildDTO)
+
+
+  fun findByVisitasNaoOcorridas(): List<VisitaDTO> =
+    repository
+      .filterByVisitaOcorrida(false)
+      .map(this::buildDTO)
+
 
 }
