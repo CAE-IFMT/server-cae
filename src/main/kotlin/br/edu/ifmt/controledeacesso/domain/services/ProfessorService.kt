@@ -25,5 +25,5 @@ class ProfessorService(
   fun findById(id: Long): ProfessorDTO = repository
       .findById(id)
       .map { buildDTO(it) }
-      .orElseThrow { ObjectNotFoundException("Professor não encontrada") }
+      .orElseThrow { ObjectNotFoundException("Professor não encontrado") }
 }
