@@ -1,6 +1,7 @@
 package br.edu.ifmt.controledeacesso.api.controllers
 
 import br.edu.ifmt.controledeacesso.domain.dto.ProfessorDTO
+import br.edu.ifmt.controledeacesso.domain.dto.VisitaDTO
 import br.edu.ifmt.controledeacesso.domain.services.ProfessorService
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.annotation.Secured
@@ -25,5 +26,12 @@ class ProfessorController(private val service: ProfessorService) {
   fun findById(@PathVariable("id") id: Long): ResponseEntity<ProfessorDTO> {
     val professor = service.findById(id)
     return ResponseEntity.ok(professor)
+  }
+
+  @GetMapping("/{id}/visitas")
+  @Secured("ROLE_ADMIN")
+  fun findVisitasByProfessor(@PathVariable("id") id: Long): ResponseEntity<List<VisitaDTO>> {
+      val professor = service.findVisitasByProfessor(id)
+      return ResponseEntity.ok(professor)
   }
 }
