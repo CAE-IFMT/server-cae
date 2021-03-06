@@ -3,6 +3,7 @@ package br.edu.ifmt.controledeacesso.domain.services
 import br.edu.ifmt.controledeacesso.domain.dto.ProfessorDTO
 import br.edu.ifmt.controledeacesso.domain.entities.Professor
 import br.edu.ifmt.controledeacesso.domain.repositories.ProfessorRepository
+import br.edu.ifmt.controledeacesso.exceptions.ObjectNotFoundException
 import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 
@@ -21,4 +22,8 @@ class ProfessorService(
     return modelMapper.map(professor, ProfessorDTO::class.java)
   }
 
+  fun findById(id: Long): ProfessorDTO = repository
+      .findById(id)
+      .map { buildDTO(it) }
+      .orElseThrow { ObjectNotFoundException("Professor não encontrada") }
 }
