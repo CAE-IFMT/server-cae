@@ -1,5 +1,5 @@
 package br.edu.ifmt.controledeacesso.domain.services
-import br.edu.ifmt.controledeacesso.domain.dto.VisitanteDTO
+import br.edu.ifmt.controledeacesso.api.controllers.dto.VisitanteDto
 import br.edu.ifmt.controledeacesso.domain.entities.Visitante
 import br.edu.ifmt.controledeacesso.domain.repositories.VisitanteRepository
 import br.edu.ifmt.controledeacesso.exceptions.ObjectNotFoundException
@@ -11,15 +11,15 @@ class VisitanteService(
     private val repository: VisitanteRepository,
     private val modelMapper: ModelMapper,
 ) {
-  fun findAll(): List<VisitanteDTO> {
+  fun findAll(): List<VisitanteDto> {
     return repository.findAll().map(this::buildDTO)
   }
 
-  private fun buildDTO(visitante: Visitante): VisitanteDTO {
-    return modelMapper.map(visitante, VisitanteDTO::class.java)
+  private fun buildDTO(visitante: Visitante): VisitanteDto {
+    return modelMapper.map(visitante, VisitanteDto::class.java)
   }
 
-  fun findById(id: Long): VisitanteDTO = repository
+  fun findById(id: Long): VisitanteDto = repository
       .findById(id)
       .map { buildDTO(it) }
       .orElseThrow { ObjectNotFoundException("Visitante não encontrado") }

@@ -1,7 +1,7 @@
 package br.edu.ifmt.controledeacesso.domain.services
 
-import br.edu.ifmt.controledeacesso.domain.dto.ProfessorDTO
-import br.edu.ifmt.controledeacesso.domain.dto.VisitaDTO
+import br.edu.ifmt.controledeacesso.api.controllers.dto.ProfessorDto
+import br.edu.ifmt.controledeacesso.api.controllers.dto.VisitaDto
 import br.edu.ifmt.controledeacesso.domain.entities.Professor
 import br.edu.ifmt.controledeacesso.domain.repositories.ProfessorRepository
 import br.edu.ifmt.controledeacesso.domain.repositories.VisitaRepository
@@ -17,22 +17,22 @@ class ProfessorService(
 ) {
 
 
-  fun findAll(): List<ProfessorDTO> {
+  fun findAll(): List<ProfessorDto> {
     return repository.findAll().map(this::buildDTO)
   }
 
-  private fun buildDTO(professor: Professor): ProfessorDTO {
-    return modelMapper.map(professor, ProfessorDTO::class.java)
+  private fun buildDTO(professor: Professor): ProfessorDto {
+    return modelMapper.map(professor, ProfessorDto::class.java)
   }
 
-  fun findById(id: Long): ProfessorDTO = repository
+  fun findById(id: Long): ProfessorDto = repository
       .findById(id)
       .map { buildDTO(it) }
       .orElseThrow { ObjectNotFoundException("Professor não encontrado") }
 
-  fun findVisitasByProfessor(id: Long): List<VisitaDTO> {
+  fun findVisitasByProfessor(id: Long): List<VisitaDto> {
     val visitas = visitaRepository.findVisitasByProfessorId(id)
-    return visitas.map { modelMapper.map(it, VisitaDTO::class.java) }
+    return visitas.map { modelMapper.map(it, VisitaDto::class.java) }
   }
 
 }

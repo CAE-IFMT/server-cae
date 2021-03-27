@@ -3,8 +3,8 @@ package br.edu.ifmt.controledeacesso.api.security.filters
 
 import br.edu.ifmt.controledeacesso.api.security.utils.JWTUtil
 import br.edu.ifmt.controledeacesso.api.security.utils.write
-import br.edu.ifmt.controledeacesso.domain.dto.UsuarioCredenciaisDTO
-import br.edu.ifmt.controledeacesso.domain.dto.UsuarioDTO
+import br.edu.ifmt.controledeacesso.api.controllers.dto.UsuarioCredenciaisDto
+import br.edu.ifmt.controledeacesso.api.controllers.dto.UsuarioDto
 import br.edu.ifmt.controledeacesso.domain.entities.Usuario
 import br.edu.ifmt.controledeacesso.exceptions.DefaultErrorMessage
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -41,7 +41,7 @@ class JWTAuthenticationFilter(
     request: HttpServletRequest?,
     response: HttpServletResponse?
   ): Authentication {
-    val login = ObjectMapper().readValue(request?.inputStream, UsuarioCredenciaisDTO::class.java)
+    val login = ObjectMapper().readValue(request?.inputStream, UsuarioCredenciaisDto::class.java)
 
     if (StringUtils.isEmpty(login.login) || StringUtils.isEmpty(login.senha))
       throw BadCredentialsException("Invalid username/password")
@@ -57,7 +57,7 @@ class JWTAuthenticationFilter(
     authentication: Authentication?
   ) {
     val usuarioData = authentication?.principal as Usuario
-    val usuarioDTO = modelMapper.map(usuarioData, UsuarioDTO::class.java)
+    val usuarioDTO = modelMapper.map(usuarioData, UsuarioDto::class.java)
     usuarioDTO.token = jwtUtil.createToken(usuarioData)
 
     response?.let {

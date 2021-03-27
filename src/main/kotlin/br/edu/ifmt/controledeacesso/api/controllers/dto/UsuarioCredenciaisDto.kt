@@ -1,4 +1,4 @@
-package br.edu.ifmt.controledeacesso.domain.dto
+package br.edu.ifmt.controledeacesso.api.controllers.dto
 
 import br.edu.ifmt.controledeacesso.config.NoArg
 
@@ -9,7 +9,7 @@ import br.edu.ifmt.controledeacesso.config.NoArg
  * @version 1.0.0
  */
 @NoArg
-data class UsuarioCredenciaisDTO(
+data class UsuarioCredenciaisDto(
   val login: String,
   val senha: String,
 )

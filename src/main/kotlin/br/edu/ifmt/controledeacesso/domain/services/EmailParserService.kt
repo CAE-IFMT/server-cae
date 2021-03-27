@@ -1,8 +1,8 @@
 package br.edu.ifmt.controledeacesso.domain.services
 
-import br.edu.ifmt.controledeacesso.domain.dto.ProfessorDTO
-import br.edu.ifmt.controledeacesso.domain.dto.VisitaSaveDTO
-import br.edu.ifmt.controledeacesso.domain.dto.VisitanteDTO
+import br.edu.ifmt.controledeacesso.api.controllers.dto.ProfessorDto
+import br.edu.ifmt.controledeacesso.api.controllers.dto.VisitaSaveDto
+import br.edu.ifmt.controledeacesso.api.controllers.dto.VisitanteDto
 import org.springframework.stereotype.Service
 import java.util.regex.Pattern
 import java.util.stream.Collectors
@@ -61,18 +61,18 @@ class EmailParserService {
     return email
   }
 
-  fun buildDTO(body: String, from: String): VisitaSaveDTO {
+  fun buildDTO(body: String, from: String): VisitaSaveDto {
     val properties = parseBody(body)
 
-    val visitante = VisitanteDTO(
+    val visitante = VisitanteDto(
       null,
       properties["visitante"]!!,
       properties["email_visitante"]!!,
       properties["cpf"]!!
     )
-    val professor = ProfessorDTO(null, properties["professor"]!!, from)
+    val professor = ProfessorDto(null, properties["professor"]!!, from)
 
-    return VisitaSaveDTO(
+    return VisitaSaveDto(
       properties["data"]!!,
       properties["motivo"]!!,
       professor,

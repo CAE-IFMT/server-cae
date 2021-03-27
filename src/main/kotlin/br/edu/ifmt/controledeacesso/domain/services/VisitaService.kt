@@ -1,7 +1,7 @@
 package br.edu.ifmt.controledeacesso.domain.services
 
-import br.edu.ifmt.controledeacesso.domain.dto.VisitaDTO
-import br.edu.ifmt.controledeacesso.domain.dto.VisitaSaveDTO
+import br.edu.ifmt.controledeacesso.api.controllers.dto.VisitaDto
+import br.edu.ifmt.controledeacesso.api.controllers.dto.VisitaSaveDto
 import br.edu.ifmt.controledeacesso.domain.entities.Professor
 import br.edu.ifmt.controledeacesso.domain.entities.Visita
 import br.edu.ifmt.controledeacesso.domain.entities.Visitante
@@ -27,23 +27,23 @@ class VisitaService(
   private val modelMapper: ModelMapper,
 ) {
 
-  fun findAll(): List<VisitaDTO> {
+  fun findAll(): List<VisitaDto> {
     return repository.findAll().map(this::buildDTO)
   }
 
-  fun save(visitaDTO: VisitaSaveDTO): VisitaDTO {
-    val entity = parseDTO(visitaDTO)
+  fun save(visitaDto: VisitaSaveDto): VisitaDto {
+    val entity = parseDTO(visitaDto)
     val visita = repository.save(entity)
-    return modelMapper.map(visita, VisitaDTO::class.java)
+    return modelMapper.map(visita, VisitaDto::class.java)
   }
 
-  fun findById(id: Long): VisitaDTO = repository
+  fun findById(id: Long): VisitaDto = repository
     .findById(id)
     .map { buildDTO(it) }
     .orElseThrow { ObjectNotFoundException("Visita não encontrada") }
 
 
-  private fun parseDTO(dto: VisitaSaveDTO): Visita {
+  private fun parseDTO(dto: VisitaSaveDto): Visita {
     val visita = modelMapper.map(dto, Visita::class.java)
       ?: throw IllegalStateException("Algo deu errado durante a construção da Visita")
     addProfessor(visita, dto)
@@ -51,7 +51,7 @@ class VisitaService(
     return visita
   }
 
-  private fun addVisitante(visita: Visita, dto: VisitaSaveDTO) {
+  private fun addVisitante(visita: Visita, dto: VisitaSaveDto) {
 
     val visitanteConsulta = visitanteRepository.findByNomeAndEmailAndCpf(
       dto.visitante.nome,
@@ -68,7 +68,7 @@ class VisitaService(
     }
   }
 
-  private fun addProfessor(visita: Visita, dto: VisitaSaveDTO) {
+  private fun addProfessor(visita: Visita, dto: VisitaSaveDto) {
 
     val professorConsulta = professorRepository.findByEmailAndNome(
       dto.professor.nome,
@@ -84,11 +84,11 @@ class VisitaService(
     }
   }
 
-  private fun buildDTO(visita: Visita): VisitaDTO {
-    return modelMapper.map(visita, VisitaDTO::class.java)
+  private fun buildDTO(visita: Visita): VisitaDto {
+    return modelMapper.map(visita, VisitaDto::class.java)
   }
 
-  fun updateVisitaOcorridaStatus(id: Long?): VisitaDTO? {
+  fun updateVisitaOcorridaStatus(id: Long?): VisitaDto? {
     if (id == null) throw IllegalStateException("Não foi possível atualizar a visita")
 
     val visitaOptional = repository.findById(id)
@@ -108,13 +108,13 @@ class VisitaService(
 
   }
 
-  fun findByVisitasOcorridas(): List<VisitaDTO> =
+  fun findByVisitasOcorridas(): List<VisitaDto> =
     repository
       .filterByVisitaOcorrida(true)
       .map(this::buildDTO)
 
 
-  fun findByVisitasNaoOcorridas(): List<VisitaDTO> =
+  fun findByVisitasNaoOcorridas(): List<VisitaDto> =
     repository
       .filterByVisitaOcorrida(false)
       .map(this::buildDTO)

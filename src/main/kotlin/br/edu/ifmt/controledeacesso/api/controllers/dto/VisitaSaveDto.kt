@@ -1,4 +1,4 @@
-package br.edu.ifmt.controledeacesso.domain.dto
+package br.edu.ifmt.controledeacesso.api.controllers.dto
 
 import br.edu.ifmt.controledeacesso.config.NoArg
 
@@ -9,10 +9,10 @@ import br.edu.ifmt.controledeacesso.config.NoArg
  * @version 1.0.0
  */
 @NoArg
-data class VisitaSaveDTO(
+data class VisitaSaveDto(
   var data: String,
   var motivo: String,
-  var professor: ProfessorDTO,
-  var visitante: VisitanteDTO,
+  var professor: ProfessorDto,
+  var visitante: VisitanteDto,
   var ocorrido: Boolean = false,
 )
