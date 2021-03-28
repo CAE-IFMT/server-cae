@@ -12,6 +12,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/visitantes")
 class VisitanteController(private val service: VisitanteService) {
+  /**
+   * Consulta todos os visitantes. Permitido apenas para administrator.</br>
+   *
+   * Método: GET</br>
+   *
+   * URI: /visitantes</br>
+   */
   @GetMapping
   @Secured("ROLE_ADMIN")
   fun findAll(): ResponseEntity<List<VisitanteDto>> {
@@ -19,6 +26,13 @@ class VisitanteController(private val service: VisitanteService) {
     return ResponseEntity.ok(visitante)
   }
 
+  /**
+   * Consulta visitante por id. Permitido apenas para administrador.</br>
+   *
+   * Método: GET</br>
+   *
+   * URI: /visitantes/{id}
+   */
   @GetMapping("/{id}")
   @Secured("ROLE_ADMIN")
   fun findById(@PathVariable("id") id: Long): ResponseEntity<VisitanteDto> {

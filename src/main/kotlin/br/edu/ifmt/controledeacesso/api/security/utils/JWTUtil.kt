@@ -25,7 +25,9 @@ class JWTUtil {
   @Value("\${jwt.expiration}")
   var expiration: Long = 600000
 
-
+  /**
+   * Gera token através do algoritmo de criptografia HS512.
+   */
   fun createToken(user: Usuario): String {
     return Jwts.builder()
       .setSubject(user.username)
@@ -34,6 +36,9 @@ class JWTUtil {
       .compact()
   }
 
+  /**
+   * Verifica validade do token através do tempo de expiração.
+   */
   fun isValidToken(token: String): Boolean {
     val claims = getClaims(token)
     if (claims != null) {
@@ -45,10 +50,16 @@ class JWTUtil {
     return false
   }
 
+  /**
+   * Extrai permissões criptografadas no token jwt
+   */
   private fun getClaims(token: String): Claims? {
     return Jwts.parser().setSigningKey(secret.toByteArray()).parseClaimsJws(token).body
   }
 
+  /**
+   * Extrai o login criptografado no token jwt
+   */
   fun getLogin(token: String): String? {
     val claims = getClaims(token)
     return claims?.subject

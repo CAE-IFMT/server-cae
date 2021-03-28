@@ -11,6 +11,9 @@ class VisitanteService(
     private val repository: VisitanteRepository,
     private val modelMapper: ModelMapper,
 ) {
+  /**
+   * Consulta todos os visitantes
+   */
   fun findAll(): List<VisitanteDto> {
     return repository.findAll().map(this::buildDTO)
   }
@@ -19,6 +22,11 @@ class VisitanteService(
     return modelMapper.map(visitante, VisitanteDto::class.java)
   }
 
+  /**
+   * Consulta visitante por id
+   *
+   * @param id Identificador do visitante
+   */
   fun findById(id: Long): VisitanteDto = repository
       .findById(id)
       .map { buildDTO(it) }

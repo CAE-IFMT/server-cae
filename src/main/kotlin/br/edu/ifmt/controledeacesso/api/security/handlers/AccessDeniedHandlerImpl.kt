@@ -17,7 +17,11 @@ import javax.servlet.http.HttpServletResponse
  * @version 1.0.0
  */
 @Component
-class AccessDeniedHandler : AccessDeniedHandler {
+class AccessDeniedHandlerImpl : AccessDeniedHandler {
+
+  /**
+   * Função responsável por tratar erro de acesso negado gerando uma resposta do tipo
+   */
   override fun handle(
     request: HttpServletRequest?,
     response: HttpServletResponse?,

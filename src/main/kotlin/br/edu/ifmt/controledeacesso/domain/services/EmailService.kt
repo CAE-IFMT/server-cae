@@ -28,6 +28,9 @@ class EmailService(
 ) {
   private val logger = KotlinLogging.logger { }
 
+  /**
+   * Gera uma imagem no formato de QRCode utilizando o JSON de uma VisitaDto.
+   */
   private fun createQRCode(visita: VisitaDto): File {
     return QRCode.from(visita.toJson())
       .to(ImageType.JPG)
@@ -36,6 +39,9 @@ class EmailService(
       .file()
   }
 
+  /**
+   * Cria uma visita através das informações do e-mail
+   */
   fun createVisita(from: String, subject: String, body: String) {
     try {
       val dto = this.parserService.buildDTO(body, from)
@@ -54,6 +60,9 @@ class EmailService(
     }
   }
 
+  /**
+   * Envia email para o professor.
+   */
   private fun sendEmailToProfessor(from: String, visita: VisitaDto) {
     val email = this.parserService.extractEmail(from)
     logger.info { "Enviando email para $email" }
@@ -72,6 +81,9 @@ class EmailService(
     logger.info { "Email enviado com sucesso!" }
   }
 
+  /**
+   * Envia email para o visitante.
+   */
   private fun sendEmailToVisitante(visita: VisitaDto) {
     val qrCode = this.createQRCode(visita)
 
@@ -88,6 +100,9 @@ class EmailService(
     logger.info { "Email enviado com sucesso!" }
   }
 
+  /**
+   * Encapsula instância do MailBuilder
+   */
   private fun mailBuilder(): MailBuilder {
     return Mail.using(mailConfiguration)
   }

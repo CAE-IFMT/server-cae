@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController
  * Controller responsável pelos endpoints de recebimento de e-mail
  * utilizado como WebHook pelo mailgun.com.
  * <br>
+ *
  * URI: <b>/email<b/>
  *
  * @project cae-api
@@ -19,6 +20,14 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/email")
 class EmailController(private val emailService: EmailService) {
+
+  /**
+   * Recebe informações sobre um eventual email. Não necessita de permissão.
+   *
+   * Método: POST
+   *
+   * URI: /email
+   */
   @PostMapping
   fun receive(
     @RequestParam(value = "from") from: String,

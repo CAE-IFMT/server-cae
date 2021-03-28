@@ -27,22 +27,33 @@ class VisitaService(
   private val modelMapper: ModelMapper,
 ) {
 
-  fun findAll(): List<VisitaDto> {
-    return repository.findAll().map(this::buildDTO)
-  }
+  /**
+   * Consulta todas as visitas.
+   */
+  fun findAll(): List<VisitaDto> = repository.findAll().map(this::buildDTO)
 
+
+  /**
+   * Salva uma visita.
+   */
   fun save(visitaDto: VisitaSaveDto): VisitaDto {
     val entity = parseDTO(visitaDto)
     val visita = repository.save(entity)
     return modelMapper.map(visita, VisitaDto::class.java)
   }
 
+  /**
+   * Busca visita por identificador
+   */
   fun findById(id: Long): VisitaDto = repository
     .findById(id)
     .map { buildDTO(it) }
     .orElseThrow { ObjectNotFoundException("Visita não encontrada") }
 
 
+  /**
+   * Converte uma VisitaSaveDto para Visita.
+   */
   private fun parseDTO(dto: VisitaSaveDto): Visita {
     val visita = modelMapper.map(dto, Visita::class.java)
       ?: throw IllegalStateException("Algo deu errado durante a construção da Visita")
@@ -51,6 +62,9 @@ class VisitaService(
     return visita
   }
 
+  /**
+   * Adiciona Visitante à Visita.
+   */
   private fun addVisitante(visita: Visita, dto: VisitaSaveDto) {
 
     val visitanteConsulta = visitanteRepository.findByNomeAndEmailAndCpf(
@@ -68,6 +82,9 @@ class VisitaService(
     }
   }
 
+  /**
+   * Adiciona Professor à Visita.
+   */
   private fun addProfessor(visita: Visita, dto: VisitaSaveDto) {
 
     val professorConsulta = professorRepository.findByEmailAndNome(
@@ -84,10 +101,16 @@ class VisitaService(
     }
   }
 
+  /**
+   * Converte Visita para VisitaDto.
+   */
   private fun buildDTO(visita: Visita): VisitaDto {
     return modelMapper.map(visita, VisitaDto::class.java)
   }
 
+  /**
+   * Atualiza o status da Visita pelo identificador.
+   */
   fun updateVisitaOcorridaStatus(id: Long?): VisitaDto? {
     if (id == null) throw IllegalStateException("Não foi possível atualizar a visita")
 
@@ -108,12 +131,18 @@ class VisitaService(
 
   }
 
+  /**
+   * Consulta todas as visitas ocorridas.
+   */
   fun findByVisitasOcorridas(): List<VisitaDto> =
     repository
       .filterByVisitaOcorrida(true)
       .map(this::buildDTO)
 
 
+  /**
+   * Consulta todas as visitas não ocorridas.
+   */
   fun findByVisitasNaoOcorridas(): List<VisitaDto> =
     repository
       .filterByVisitaOcorrida(false)
