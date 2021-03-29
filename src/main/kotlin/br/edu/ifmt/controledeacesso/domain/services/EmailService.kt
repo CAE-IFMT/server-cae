@@ -1,6 +1,6 @@
 package br.edu.ifmt.controledeacesso.domain.services
 
-import br.edu.ifmt.controledeacesso.domain.dto.VisitaDTO
+import br.edu.ifmt.controledeacesso.api.controllers.dto.VisitaDto
 import mu.KotlinLogging
 import net.glxn.qrgen.core.image.ImageType
 import net.glxn.qrgen.javase.QRCode
@@ -28,7 +28,10 @@ class EmailService(
 ) {
   private val logger = KotlinLogging.logger { }
 
-  private fun createQRCode(visita: VisitaDTO): File {
+  /**
+   * Gera uma imagem no formato de QRCode utilizando o JSON de uma VisitaDto.
+   */
+  private fun createQRCode(visita: VisitaDto): File {
     return QRCode.from(visita.toJson())
       .to(ImageType.JPG)
       .withCharset("UTF-8")
@@ -36,6 +39,9 @@ class EmailService(
       .file()
   }
 
+  /**
+   * Cria uma visita através das informações do e-mail
+   */
   fun createVisita(from: String, subject: String, body: String) {
     try {
       val dto = this.parserService.buildDTO(body, from)
@@ -54,7 +60,10 @@ class EmailService(
     }
   }
 
-  private fun sendEmailToProfessor(from: String, visita: VisitaDTO) {
+  /**
+   * Envia email para o professor.
+   */
+  private fun sendEmailToProfessor(from: String, visita: VisitaDto) {
     val email = this.parserService.extractEmail(from)
     logger.info { "Enviando email para $email" }
 
@@ -72,7 +81,10 @@ class EmailService(
     logger.info { "Email enviado com sucesso!" }
   }
 
-  private fun sendEmailToVisitante(visita: VisitaDTO) {
+  /**
+   * Envia email para o visitante.
+   */
+  private fun sendEmailToVisitante(visita: VisitaDto) {
     val qrCode = this.createQRCode(visita)
 
     logger.info { "Email enviado para ${visita.visitante.email}" }
@@ -88,6 +100,9 @@ class EmailService(
     logger.info { "Email enviado com sucesso!" }
   }
 
+  /**
+   * Encapsula instância do MailBuilder
+   */
   private fun mailBuilder(): MailBuilder {
     return Mail.using(mailConfiguration)
   }

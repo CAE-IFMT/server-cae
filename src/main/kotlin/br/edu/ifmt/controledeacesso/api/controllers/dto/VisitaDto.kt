@@ -1,4 +1,4 @@
-package br.edu.ifmt.controledeacesso.domain.dto
+package br.edu.ifmt.controledeacesso.api.controllers.dto
 
 import br.edu.ifmt.controledeacesso.config.NoArg
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -11,13 +11,13 @@ import com.fasterxml.jackson.databind.ObjectMapper
  * @author daohn on 06/02/2021
  */
 @NoArg
-data class VisitaDTO(
+data class VisitaDto(
   var id: Long,
   var data: String,
   var motivo: String,
   var ocorrido: Boolean,
-  var professor: ProfessorDTO,
-  var visitante: VisitanteDTO,
+  var professor: ProfessorDto,
+  var visitante: VisitanteDto,
 ) {
   fun toJson(): String = ObjectMapper().writeValueAsString(this)
 }

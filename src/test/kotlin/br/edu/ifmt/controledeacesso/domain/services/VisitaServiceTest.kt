@@ -1,8 +1,8 @@
 package br.edu.ifmt.controledeacesso.domain.services
 
-import br.edu.ifmt.controledeacesso.domain.dto.ProfessorDTO
-import br.edu.ifmt.controledeacesso.domain.dto.VisitaSaveDTO
-import br.edu.ifmt.controledeacesso.domain.dto.VisitanteDTO
+import br.edu.ifmt.controledeacesso.api.controllers.dto.ProfessorDto
+import br.edu.ifmt.controledeacesso.api.controllers.dto.VisitaSaveDto
+import br.edu.ifmt.controledeacesso.api.controllers.dto.VisitanteDto
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,11 +22,11 @@ class VisitaServiceTest {
 
   @Test
   fun saveTest() {
-    val visitaSave = VisitaSaveDTO(
+    val visitaSave = VisitaSaveDto(
       "11/02/2020",
       "motivo aqui",
-      ProfessorDTO(null, "nome professor", "email professor"),
-      VisitanteDTO(null, "nome visitante", "email visitante", "cpf")
+      ProfessorDto(null, "nome professor", "email professor"),
+      VisitanteDto(null, "nome visitante", "email visitante", "cpf")
     )
     val visita = service.save(visitaSave)
 

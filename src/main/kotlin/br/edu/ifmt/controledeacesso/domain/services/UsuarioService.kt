@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service
 @Service("usuarioService")
 class UsuarioService(val repository: UsuarioRepository) : UserDetailsService {
 
+  /**
+   * Consulta a existência de um Usuario pelo login.
+   */
   @Throws(UsernameNotFoundException::class)
   override fun loadUserByUsername(login: String): UserDetails = repository
     .findByLogin(login)

@@ -16,7 +16,11 @@ import javax.servlet.http.HttpServletResponse
  * @version 1.0.0
  */
 @Component
-class UnauthorizedHandler : AuthenticationEntryPoint {
+class UnauthorizedHandlerImpl : AuthenticationEntryPoint {
+  /**
+   * Função callback chamada após encontrar uma exceção do tipo AuthenticationException. Adiciona
+   * um DefaultErrorMessage contendo mensagem de erro.
+   */
   override fun commence(
     request: HttpServletRequest?,
     response: HttpServletResponse?,

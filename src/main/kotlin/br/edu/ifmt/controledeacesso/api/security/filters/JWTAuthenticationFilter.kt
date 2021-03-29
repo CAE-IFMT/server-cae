@@ -1,10 +1,10 @@
 package br.edu.ifmt.controledeacesso.api.security.filters
 
 
+import br.edu.ifmt.controledeacesso.api.controllers.dto.UsuarioCredenciaisDto
+import br.edu.ifmt.controledeacesso.api.controllers.dto.UsuarioDto
 import br.edu.ifmt.controledeacesso.api.security.utils.JWTUtil
 import br.edu.ifmt.controledeacesso.api.security.utils.write
-import br.edu.ifmt.controledeacesso.domain.dto.UsuarioCredenciaisDTO
-import br.edu.ifmt.controledeacesso.domain.dto.UsuarioDTO
 import br.edu.ifmt.controledeacesso.domain.entities.Usuario
 import br.edu.ifmt.controledeacesso.exceptions.DefaultErrorMessage
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -37,19 +37,26 @@ class JWTAuthenticationFilter(
 ) :
   UsernamePasswordAuthenticationFilter(authenticationManager) {
 
+  /**
+   * Realiza tentativa de autenticação na api através do DTO UsuarioCredenciaisDto validando o
+   * login e senha no corpo da requisição.
+   */
   override fun attemptAuthentication(
     request: HttpServletRequest?,
     response: HttpServletResponse?
   ): Authentication {
-    val login = ObjectMapper().readValue(request?.inputStream, UsuarioCredenciaisDTO::class.java)
+    val usuarioCredenciaisDto = ObjectMapper().readValue(request?.inputStream, UsuarioCredenciaisDto::class.java)
 
-    if (StringUtils.isEmpty(login.login) || StringUtils.isEmpty(login.senha))
+    if (StringUtils.isEmpty(usuarioCredenciaisDto.login) || StringUtils.isEmpty(usuarioCredenciaisDto.senha))
       throw BadCredentialsException("Invalid username/password")
 
-    val authentication = UsernamePasswordAuthenticationToken(login.login, login.senha)
+    val authentication = UsernamePasswordAuthenticationToken(usuarioCredenciaisDto.login, usuarioCredenciaisDto.senha)
     return authenticationManager.authenticate(authentication)
   }
 
+  /**
+   * Retorna um UsuarioDto após realizar com sucesso a autenticação na api.
+   */
   override fun successfulAuthentication(
     request: HttpServletRequest?,
     response: HttpServletResponse?,
@@ -57,15 +64,18 @@ class JWTAuthenticationFilter(
     authentication: Authentication?
   ) {
     val usuarioData = authentication?.principal as Usuario
-    val usuarioDTO = modelMapper.map(usuarioData, UsuarioDTO::class.java)
-    usuarioDTO.token = jwtUtil.createToken(usuarioData)
+    val usuarioDto = modelMapper.map(usuarioData, UsuarioDto::class.java)
+    usuarioDto.token = jwtUtil.createToken(usuarioData)
 
     response?.let {
-      it.addHeader("Authorization", "Bearer " + usuarioDTO.token)
-      write(it, HttpStatus.OK, usuarioDTO.toJson())
+      it.addHeader("Authorization", "Bearer " + usuarioDto.token)
+      write(it, HttpStatus.OK, usuarioDto.toJson())
     }
   }
 
+  /**
+   * Retorna uma mensagem de erro após falhar na autenticação da api.
+   */
   @Throws(IOException::class, ServletException::class)
   override fun unsuccessfulAuthentication(
     request: HttpServletRequest?,

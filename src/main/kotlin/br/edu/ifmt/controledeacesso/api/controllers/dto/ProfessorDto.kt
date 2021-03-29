@@ -1,4 +1,4 @@
-package br.edu.ifmt.controledeacesso.domain.dto
+package br.edu.ifmt.controledeacesso.api.controllers.dto
 
 import br.edu.ifmt.controledeacesso.config.NoArg
 
@@ -10,7 +10,7 @@ import br.edu.ifmt.controledeacesso.config.NoArg
  * @author daohn on 06/02/2021
  */
 @NoArg
-data class ProfessorDTO(
+data class ProfessorDto(
   var id: Long? = null,
   var nome: String,
   var email: String,

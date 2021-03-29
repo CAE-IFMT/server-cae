@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
+import java.util.*
 
 /**
  * @project cae-api
@@ -17,4 +18,5 @@ interface VisitaRepository : JpaRepository<Visita, Long> {
     value = "select visita from Visita visita where visita.ocorrido = :ocorrida"
   )
   fun filterByVisitaOcorrida(@Param("ocorrida") ocorrida: Boolean) : List<Visita>
+  fun findVisitasByProfessorId(id: Long): List<Visita>
 }
